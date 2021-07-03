@@ -1,5 +1,0 @@
-package fizzbuzz
-
-func main(){
-
-}
