@@ -18,16 +18,15 @@ type MainFizzBuzzRequestAPIHandler struct {
 }
 
 type FizzBuzzAPIRequest struct {
-	firstInt  int    `json:"firstInt": "required"`
-	secondInt int    `json:"secondInt": "required"`
-	thirdInt  int    `json:"thirdInt": "required"`
-	limit     int    `json:"limit": "required"`
-	firstStr  string `json:"firstStr": "required"`
-	secondStr string `json:"secondStr": "required"`
+	FirstInt  int    `json:"firstInt" binding:"required"`
+	SecondInt int    `json:"secondInt" binding:"required"`
+	Limit     int    `json:"limit" binding:"required"`
+	FirstStr  string `json:"firstStr" binding:"required"`
+	SecondStr string `json:"secondStr" binding:"required"`
 }
 
 type FizzBuzzAPIResponse struct {
-	fizzBuzzStringList []string `json:"fizzBuzzStringList"`
+	FizzBuzzStringList []string `json:"fizzBuzzStringList"`
 }
 
 type BadRequestServerResponsePayload struct {

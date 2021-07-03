@@ -19,8 +19,7 @@ func main() {
 	fizzBuzzRequestAPIHandler := api.MainFizzBuzzRequestAPIHandler{
 		StringListBuilder: mainBuilder,
 	}
-
-	router := gin.Default()
+	router := gin.New()
 	port := 9000 // TODO get this from a config
 
 	router.Group("/v1/fizzbuzz").

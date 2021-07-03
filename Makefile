@@ -2,5 +2,8 @@ build:
 	GO111MODULE=on go build \
      -v -o ./service cmd/main/*.go
 
-run: build
+clean:
+	rm ./service || true
+
+run: clean build
 	./service

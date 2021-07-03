@@ -1,5 +1,29 @@
 package fizzBuzz
 
+import (
+	"strconv"
+	"strings"
+)
+
 func (builder *MainStringListBuilder) BuildStringList(buildInput *StringListBuildInput) []string {
-	return []string{buildInput.FirstStr, buildInput.SecondStr}
+	stringList := make([]string, buildInput.Limit)
+	twoInputStringsJoined := strings.Join([]string{buildInput.FirstStr, buildInput.SecondStr}, "")
+
+	for i := 0; i < buildInput.Limit; i++ {
+		currentNumber := i + 1
+		firstIntModulo := currentNumber % buildInput.FirstInt
+		secondIntModulo := currentNumber % buildInput.SecondInt
+		switch {
+		case firstIntModulo == 0 && secondIntModulo == 0:
+			stringList[i] = twoInputStringsJoined
+		case firstIntModulo == 0:
+			stringList[i] = buildInput.FirstStr
+		case secondIntModulo == 0:
+			stringList[i] = buildInput.SecondStr
+		default:
+			stringList[i] = strconv.Itoa(currentNumber)
+		}
+	}
+
+	return stringList
 }

@@ -3,10 +3,11 @@ package api
 import (
 	"net/http"
 
+	"github.com/gin-gonic/gin/binding"
+
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzBuzz"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 )
 
 func (handler *MainFizzBuzzRequestAPIHandler) HandleFizzBuzzRequest() gin.HandlerFunc {
@@ -24,19 +25,18 @@ func (handler *MainFizzBuzzRequestAPIHandler) fizzBuzzRequestHandler(c *gin.Cont
 	fizzBuzzStringList := handler.StringListBuilder.BuildStringList(fizzBuzzListBuildInput)
 
 	apiResponse := FizzBuzzAPIResponse{
-		fizzBuzzStringList: fizzBuzzStringList,
+		FizzBuzzStringList: fizzBuzzStringList,
 	}
 
-	c.JSON(http.StatusInternalServerError, apiResponse)
+	c.JSON(http.StatusOK, apiResponse)
 }
 
 func toFizzBuzzListBuildInput(request *FizzBuzzAPIRequest) *fizzBuzz.StringListBuildInput {
 	return &fizzBuzz.StringListBuildInput{
-		FirstInt:  request.firstInt,
-		SecondInt: request.secondInt,
-		ThirdInt:  request.thirdInt,
-		Limit:     request.limit,
-		FirstStr:  request.firstStr,
-		SecondStr: request.secondStr,
+		FirstInt:  request.FirstInt,
+		SecondInt: request.SecondInt,
+		Limit:     request.Limit,
+		FirstStr:  request.FirstStr,
+		SecondStr: request.SecondStr,
 	}
 }
