@@ -1,5 +1,5 @@
 package fizzBuzz
 
-func (builder *MainStringListBuilder) GenerateStringList(buildInput *StringListBuildInput) []string {
+func (builder *MainStringListBuilder) BuildStringList(buildInput *StringListBuildInput) []string {
 	return []string{}
 }

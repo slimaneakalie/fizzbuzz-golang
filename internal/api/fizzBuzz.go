@@ -21,7 +21,7 @@ func (handler *MainFizzBuzzRequestAPIHandler) fizzBuzzRequestHandler(c *gin.Cont
 	}
 
 	fizzBuzzListBuildInput := toFizzBuzzListBuildInput(&userRequest)
-	fizzBuzzStringList := handler.stringListBuilder.BuildStringList(fizzBuzzListBuildInput)
+	fizzBuzzStringList := handler.StringListBuilder.BuildStringList(fizzBuzzListBuildInput)
 
 	apiResponse := FizzBuzzAPIResponse{
 		fizzBuzzStringList: fizzBuzzStringList,

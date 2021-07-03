@@ -14,7 +14,7 @@ type FizzBuzzRequestAPIHandler interface {
 }
 
 type MainFizzBuzzRequestAPIHandler struct {
-	stringListBuilder fizzBuzz.StringListBuilder
+	StringListBuilder fizzBuzz.StringListBuilder
 }
 
 type FizzBuzzAPIRequest struct {
