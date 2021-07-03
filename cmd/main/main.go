@@ -10,15 +10,18 @@ import (
 )
 
 func main() {
+	// TODO separate this into dedicated files and functions
+	serviceMode := gin.ReleaseMode // TODO get this from a config
+	gin.SetMode(serviceMode)
 
-	stringListBuilder := &fizzBuzz.MainStringListBuilder{}
+	mainBuilder := &fizzBuzz.MainStringListBuilder{}
 
 	fizzBuzzRequestAPIHandler := api.MainFizzBuzzRequestAPIHandler{
-		StringListBuilder: stringListBuilder,
+		StringListBuilder: mainBuilder,
 	}
 
 	router := gin.Default()
-	port := 9000 // TODO get it from a config
+	port := 9000 // TODO get this from a config
 
 	router.Group("/v1/fizzbuzz").
 		POST("/", fizzBuzzRequestAPIHandler.HandleFizzBuzzRequest())

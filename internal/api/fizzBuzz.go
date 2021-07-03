@@ -27,7 +27,7 @@ func (handler *MainFizzBuzzRequestAPIHandler) fizzBuzzRequestHandler(c *gin.Cont
 		fizzBuzzStringList: fizzBuzzStringList,
 	}
 
-	c.JSON(http.StatusOK, apiResponse)
+	c.JSON(http.StatusInternalServerError, apiResponse)
 }
 
 func toFizzBuzzListBuildInput(request *FizzBuzzAPIRequest) *fizzBuzz.StringListBuildInput {
