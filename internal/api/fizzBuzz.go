@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (handler *MainFizzBuzzRequestAPIHandler) HandleFizzBuzzRequest() gin.HandlerFunc {
+func (handler *MainFizzBuzzRequestAPIHandler) handleFizzBuzzRequest() gin.HandlerFunc {
 	return handler.fizzBuzzRequestHandler
 }
 
@@ -40,3 +40,5 @@ func toFizzBuzzListBuildInput(request *FizzBuzzAPIRequest) *fizzBuzz.StringListB
 		SecondStr: request.SecondStr,
 	}
 }
+
+func private() {}

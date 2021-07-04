@@ -22,11 +22,11 @@ func handleBindError(bindError error) *gin.Error {
 	case requestUnmarshalErrorType:
 		errorObject.Meta = createUnmarshalErrorServerResponse(bindError.(requestUnmarshalErrorType))
 
-	case validationErrorType:
-		errorObject.Meta = createValidationErrorServerResponse(bindError.(validationErrorType))
+	case validationErrorsType:
+		errorObject.Meta = createValidationErrorServerResponse(bindError.(validationErrorsType))
 
 	default:
-		errorObject.Meta = BadRequestServerResponsePayload{
+		errorObject.Meta = badRequestServerResponsePayload{
 			Type: BadRequestResponseTypeCode,
 		}
 	}
@@ -34,10 +34,10 @@ func handleBindError(bindError error) *gin.Error {
 	return errorObject
 }
 
-func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) BadRequestServerResponsePayload {
-	return BadRequestServerResponsePayload{
+func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) badRequestServerResponsePayload {
+	return badRequestServerResponsePayload{
 		Type: BadRequestResponseTypeCode,
-		Metadata: []FieldError{{
+		Metadata: []fieldError{{
 			Type:   ParamTypeMismatchErrorCode,
 			Field:  unmarshalError.Field,
 			Detail: generateUnmarshalErrorResponseMessage(unmarshalError),
@@ -49,17 +49,17 @@ func generateUnmarshalErrorResponseMessage(unmarshalError requestUnmarshalErrorT
 	return fmt.Sprintf("expected type %s instead of %s", unmarshalError.Type.String(), unmarshalError.Value)
 }
 
-func createValidationErrorServerResponse(validationError validationErrorType) BadRequestServerResponsePayload {
-	var fieldErrors []FieldError
-	for _, validationError := range validationError {
-		fieldErrors = append(fieldErrors, FieldError{
+func createValidationErrorServerResponse(validationErrors validationErrorsType) badRequestServerResponsePayload {
+	var fieldErrors []fieldError
+	for _, validationError := range validationErrors {
+		fieldErrors = append(fieldErrors, fieldError{
 			Type:   InvalidParamValueErrorCode,
 			Field:  validationError.Field(),
 			Detail: generateFieldErrorResponseMessage(validationError),
 		})
 	}
 
-	return BadRequestServerResponsePayload{
+	return badRequestServerResponsePayload{
 		Type:     BadRequestResponseTypeCode,
 		Metadata: fieldErrors,
 	}

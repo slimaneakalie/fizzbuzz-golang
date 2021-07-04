@@ -7,3 +7,6 @@ clean:
 
 run: build
 	./service
+
+test:
+	go test -v ./...

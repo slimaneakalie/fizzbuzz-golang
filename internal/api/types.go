@@ -9,8 +9,12 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+type Router struct {
+	ginEngine *gin.Engine
+}
+
 type FizzBuzzRequestAPIHandler interface {
-	HandleFizzBuzzRequest() gin.HandlerFunc
+	handleFizzBuzzRequest() gin.HandlerFunc
 }
 
 type MainFizzBuzzRequestAPIHandler struct {
@@ -29,16 +33,16 @@ type FizzBuzzAPIResponse struct {
 	FizzBuzzStringList []string `json:"fizzBuzzStringList"`
 }
 
-type BadRequestServerResponsePayload struct {
+type badRequestServerResponsePayload struct {
 	Type     string       `json:"type"`
-	Metadata []FieldError `json:"errors,omitempty"`
+	Metadata []fieldError `json:"errors,omitempty"`
 }
 
-type FieldError struct {
+type fieldError struct {
 	Type   string `json:"type"`
 	Field  string `json:"field"`
 	Detail string `json:"detail"`
 }
 
 type requestUnmarshalErrorType = *json.UnmarshalTypeError
-type validationErrorType = validator.ValidationErrors
+type validationErrorsType = validator.ValidationErrors
