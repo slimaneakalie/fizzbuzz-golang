@@ -8,5 +8,5 @@ clean:
 run: build
 	./service
 
-test:
+testing:
 	go test -v ./...

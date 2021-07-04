@@ -1,4 +1,4 @@
-package fizzBuzz
+package fizzbuzz
 
 type StringListBuildInput struct {
 	FirstInt  int
@@ -6,10 +6,6 @@ type StringListBuildInput struct {
 	Limit     int
 	FirstStr  string
 	SecondStr string
-}
-
-type StringListBuilder interface {
-	BuildStringList(*StringListBuildInput) []string
 }
 
 type MainStringListBuilder struct{}

@@ -7,12 +7,10 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("the strings package", func() {
-	Context("strings.Contains()", func() {
-		When("the string contains the substring in the middle", func() {
-			It("returns `true`", func() {
-				Expect(strings.Contains("Ginkgo is awesome", "is")).To(BeTrue())
-			})
+var _ = Describe("Api package - Router file", func() {
+	Context("Router testing", func() {
+		It("returns `true`", func() {
+			Expect(strings.Contains("Ginkgo is awesome", "is")).To(BeTrue())
 		})
 	})
 })

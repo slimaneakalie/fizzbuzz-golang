@@ -1,9 +1,8 @@
-package api
+package fizzhttp
 
 import (
 	"fmt"
 
-	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -12,27 +11,6 @@ const (
 	InvalidParamValueErrorCode = "InvalidParamValue"
 	ParamTypeMismatchErrorCode = "ParamTypeMismatch"
 )
-
-func handleBindError(bindError error) *gin.Error {
-	errorObject := &gin.Error{
-		Err: bindError,
-	}
-
-	switch bindError.(type) {
-	case requestUnmarshalErrorType:
-		errorObject.Meta = createUnmarshalErrorServerResponse(bindError.(requestUnmarshalErrorType))
-
-	case validationErrorsType:
-		errorObject.Meta = createValidationErrorServerResponse(bindError.(validationErrorsType))
-
-	default:
-		errorObject.Meta = badRequestServerResponsePayload{
-			Type: BadRequestResponseTypeCode,
-		}
-	}
-
-	return errorObject
-}
 
 func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) badRequestServerResponsePayload {
 	return badRequestServerResponsePayload{
