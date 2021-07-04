@@ -4,7 +4,7 @@ import (
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
 )
 
-func NewTestEngineFactory(testingEngine *TestingEngine) *TestingEngineFactory {
+func NewTestingEngineFactory(testingEngine *TestingEngine) *TestingEngineFactory {
 	return &TestingEngineFactory{
 		engine: testingEngine,
 	}
