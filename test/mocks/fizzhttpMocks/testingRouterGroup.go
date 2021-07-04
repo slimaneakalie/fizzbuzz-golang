@@ -5,9 +5,9 @@ import (
 )
 
 func (group *TestingRouterGroup) POST(relativePath string, handler fizzhttp.HandlerFunc) {
-	group.RecordFuncCall("POST", []interface{}{relativePath, handler})
+	group.RecordFuncCall("POST", relativePath, handler)
 }
 
 func (group *TestingRouterGroup) GET(relativePath string, handler fizzhttp.HandlerFunc) {
-	group.RecordFuncCall("GET", []interface{}{relativePath, handler})
+	group.RecordFuncCall("GET", relativePath, handler)
 }

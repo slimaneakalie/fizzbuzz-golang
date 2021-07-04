@@ -17,7 +17,9 @@ func (factory *TestingEngineFactory) NewEngine() fizzhttp.Engine {
 
 func (engine *TestingEngine) Group(relativePath string) fizzhttp.RouterGroup {
 	engine.RecordFuncCall("Group", relativePath)
-	return &TestingRouterGroup{}
+	newRouterGroup := &TestingRouterGroup{}
+	engine.RouterGroups = append(engine.RouterGroups, newRouterGroup)
+	return newRouterGroup
 }
 
 func (engine *TestingEngine) FormatBindingError(bindError error) error {

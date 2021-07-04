@@ -10,15 +10,19 @@ import (
 var _ = Describe("Api package - Router.go", func() {
 	Context("NewRouter function", func() {
 		It("should create a new router while using the injected httpEngineFactory and stringListBuilder", func() {
-			testingEngine := &fizzhttpMocks.TestingEngine{}
+			testingEngine := &fizzhttpMocks.TestingEngine{
+				RouterGroups: []*fizzhttpMocks.TestingRouterGroup{},
+			}
+
 			testingEngineFactory := fizzhttpMocks.NewTestingEngineFactory(testingEngine)
 			stringListBuilder := &fizzbuzz.MainStringListBuilder{}
 			router := NewRouter(testingEngineFactory, stringListBuilder)
-			// httpRouterGroupForTest := MockElement
+
 			Expect(testingEngineFactory.IsCalledNTimes("NewEngine", 1)).To(BeTrue())
+			Expect(testingEngine.IsCalledWithParamsExactly("Group", "/v1/fizzbuzz")).To(BeTrue())
+			Expect(testingEngine.RouterGroups).To(HaveLen(1))
+			Expect(testingEngine.RouterGroups[0].IsCalledWithParamsPartially("POST", "/")).To(BeTrue())
 			Expect(router.httpEngine).To(Equal(testingEngine))
-			Expect(testingEngine.IsCalledWith("Group", []interface{}{"/v1/fizzbuzz"})).To(BeTrue())
-			// Expect(httpRouterGroupForTest.POSTEndpoints).To(Equal([]string{"/"}))
 		})
 	})
 })

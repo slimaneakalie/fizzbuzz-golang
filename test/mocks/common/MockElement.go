@@ -21,17 +21,37 @@ func (mockElement *MockElement) IsCalledNTimes(funcName string, n int) bool {
 	return callData != nil && len(callData) == n
 }
 
-func (mockElement *MockElement) IsCalledWith(funcName string, params []interface{}) bool {
-	callData, ok := mockElement.funcCallsMap[funcName]
-	if !ok || len(callData) == 0 {
-		return false
-	}
-
-	for index, element := range callData[0].callParamsInOrder {
+func (mockElement *MockElement) IsCalledWithParamsExactly(funcName string, params ...interface{}) bool {
+	funcFirstCallParams := mockElement.getFuncFirstCallParamsInOrder(funcName)
+	for index, element := range funcFirstCallParams {
 		if params[index] != element {
 			return false
 		}
 	}
 
 	return true
+}
+
+func (mockElement *MockElement) IsCalledWithParamsPartially(funcName string, params ...interface{}) bool {
+	funcFirstCallParams := mockElement.getFuncFirstCallParamsInOrder(funcName)
+	if funcFirstCallParams == nil {
+		return false
+	}
+
+	for index, element := range params {
+		if funcFirstCallParams[index] != element {
+			return false
+		}
+	}
+
+	return true
+}
+
+func (mockElement *MockElement) getFuncFirstCallParamsInOrder(funcName string) []interface{} {
+	callData, ok := mockElement.funcCallsMap[funcName]
+	if !ok || callData == nil {
+		return nil
+	}
+
+	return callData[0].callParamsInOrder
 }
