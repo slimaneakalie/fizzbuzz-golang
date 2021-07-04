@@ -1,6 +1,10 @@
 package fizzhttp
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+
+	"github.com/gin-gonic/gin"
+)
 
 func NewEngineFactory(serviceMode string) *MainEngineFactory {
 	gin.SetMode(serviceMode)
@@ -19,8 +23,8 @@ func (engine *mainEngine) Group(relativePath string) RouterGroup {
 	}
 }
 
-func (engine *mainEngine) Run(addr string) error {
-	return engine.internalEngine.Run(addr)
+func (engine *mainEngine) Run(port int) error {
+	return engine.internalEngine.Run(fmt.Sprintf(":%d", port))
 }
 
 func (engine *mainEngine) FormatBindingError(bindError error) error {

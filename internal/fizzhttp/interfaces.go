@@ -9,7 +9,7 @@ type EngineFactory interface {
 type Engine interface {
 	Group(relativePath string) RouterGroup
 	FormatBindingError(bindError error) error
-	Run(addr string) error
+	Run(port int) error
 }
 
 type RouterGroup interface {

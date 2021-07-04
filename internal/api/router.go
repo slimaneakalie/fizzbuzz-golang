@@ -26,7 +26,7 @@ func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder fizzb
 
 func (router *Router) Run(port int) {
 	fmt.Println("Running server on port", port)
-	err := router.httpEngine.Run(fmt.Sprintf(":%d", port))
+	err := router.httpEngine.Run(port)
 	if err != nil {
 		fmt.Println("Error running server caused by:", err.Error())
 	}

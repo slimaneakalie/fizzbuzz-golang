@@ -10,6 +10,13 @@ func NewTestingEngineFactory(testingEngine *TestingEngine) *TestingEngineFactory
 	}
 }
 
+func NewTestingEngine(runMethodOutput error) *TestingEngine {
+	return &TestingEngine{
+		RouterGroups:    []*TestingRouterGroup{},
+		RunMethodOutput: runMethodOutput,
+	}
+}
+
 func (factory *TestingEngineFactory) NewEngine() fizzhttp.Engine {
 	factory.RecordFuncCall("NewEngine")
 	return factory.engine
@@ -27,7 +34,7 @@ func (engine *TestingEngine) FormatBindingError(bindError error) error {
 	return nil
 }
 
-func (engine *TestingEngine) Run(addr string) error {
-	engine.RecordFuncCall("Run", addr)
+func (engine *TestingEngine) Run(port int) error {
+	engine.RecordFuncCall("Run", port)
 	return nil
 }

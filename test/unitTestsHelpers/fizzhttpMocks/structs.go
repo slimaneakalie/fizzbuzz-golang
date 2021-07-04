@@ -1,7 +1,7 @@
 package fizzhttpMocks
 
 import (
-	"github.com/slimaneakalie/fizzbuzz-golang/test/mocks/common"
+	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/common"
 )
 
 type TestingEngineFactory struct {
@@ -11,7 +11,8 @@ type TestingEngineFactory struct {
 
 type TestingEngine struct {
 	common.MockElement
-	RouterGroups []*TestingRouterGroup
+	RouterGroups    []*TestingRouterGroup
+	RunMethodOutput error
 }
 
 type TestingRouterGroup struct {
