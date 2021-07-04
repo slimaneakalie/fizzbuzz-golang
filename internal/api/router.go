@@ -16,8 +16,8 @@ func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder fizzb
 		bindingErrorFormatter: engine.FormatBindingError,
 	}
 
-	engine.Group("/v1/fizzbuzz").
-		POST("/", fizzbuzzRequestAPIHandler.handleFizzbuzzRequest())
+	group := engine.Group("/v1/fizzbuzz")
+	group.POST("/", fizzbuzzRequestAPIHandler.handleFizzbuzzRequest())
 
 	return &Router{
 		httpEngine: engine,
@@ -25,9 +25,9 @@ func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder fizzb
 }
 
 func (router *Router) Run(port int) {
-	fmt.Println("Running server on port ", port)
+	fmt.Println("Running server on port", port)
 	err := router.httpEngine.Run(fmt.Sprintf(":%d", port))
 	if err != nil {
-		fmt.Println("Error running server caused by: ", err.Error())
+		fmt.Println("Error running server caused by:", err.Error())
 	}
 }
