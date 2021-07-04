@@ -4,6 +4,7 @@ import "github.com/slimaneakalie/fizzbuzz-golang/test/mocks/common"
 
 type TestingEngineFactory struct {
 	common.MockElement
+	engine *TestingEngine
 }
 
 type TestingEngine struct {

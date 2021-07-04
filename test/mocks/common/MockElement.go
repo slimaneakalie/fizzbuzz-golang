@@ -1,6 +1,10 @@
 package common
 
-func (mockElement *MockElement) recordFuncCall(funcName string, callParamsInOrder ...interface{}) {
+func (mockElement *MockElement) RecordFuncCall(funcName string, callParamsInOrder ...interface{}) {
+	if mockElement.funcCallsMap == nil {
+		mockElement.funcCallsMap = map[string]FuncCallsInOrder{}
+	}
+
 	callData := FuncCallData{
 		callParamsInOrder: callParamsInOrder,
 	}
@@ -10,4 +14,9 @@ func (mockElement *MockElement) recordFuncCall(funcName string, callParamsInOrde
 	} else {
 		mockElement.funcCallsMap[funcName] = []FuncCallData{callData}
 	}
+}
+
+func (mockElement *MockElement) IsCalledNTimes(funcName string, n int) bool {
+	callData, _ := mockElement.funcCallsMap[funcName]
+	return callData != nil && len(callData) == n
 }

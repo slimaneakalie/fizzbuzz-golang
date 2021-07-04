@@ -16,7 +16,7 @@ var _ = Describe("Api package - Router.go", func() {
 			// httpEngineForTest := MockElement
 			// httpRouterGroupForTest := MockElement
 			// Expect(httpEngineFactory.isCalled('NewEngine')).To(BeTrue())
-			Expect(method.isCalled(httpEngineFactory.NewEngine)).To(BeTrue())
+			Expect(httpEngineFactory.IsCalledNTimes("NewEngine", 1)).To(BeTrue())
 			Expect(router.httpEngine).To(Equal(httpEngineForTest))
 			Expect(method.isCalledWith(httpEngineForTest.Group, "/v1/fizzbuzz")).To(BeTrue())
 			Expect(httpRouterGroupForTest.POSTEndpoints).To(Equal([]string{"/"}))

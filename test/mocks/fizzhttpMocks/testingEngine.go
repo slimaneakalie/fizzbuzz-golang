@@ -4,13 +4,15 @@ import (
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
 )
 
-func NewTestEngineFactory() *TestingEngineFactory {
-	return &TestingEngineFactory{}
+func NewTestEngineFactory(testingEngine *TestingEngine) *TestingEngineFactory {
+	return &TestingEngineFactory{
+		engine: testingEngine,
+	}
 }
 
 func (factory *TestingEngineFactory) NewEngine() fizzhttp.Engine {
-
-	return &TestingEngine{}
+	factory.RecordFuncCall("NewEngine", []interface{}{})
+	return factory.engine
 }
 
 func (engine *TestingEngine) Group(relativePath string) fizzhttp.RouterGroup {
