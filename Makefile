@@ -5,5 +5,5 @@ build:
 clean:
 	rm ./service || true
 
-run: clean build
+run: build
 	./service
