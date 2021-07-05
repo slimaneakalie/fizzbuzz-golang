@@ -6,28 +6,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewEngineFactory(serviceMode string) EngineFactory {
+func NewDefaultHttpEngineFactory(serviceMode string) EngineFactory {
 	gin.SetMode(serviceMode)
-	return &mainEngineFactory{}
+	return &defaultEngineFactory{}
 }
 
-func (factory *mainEngineFactory) NewEngine() Engine {
-	return &mainEngine{
+func (factory *defaultEngineFactory) NewEngine() Engine {
+	return &defaultEngine{
 		internalEngine: gin.Default(),
 	}
 }
 
-func (engine *mainEngine) Group(relativePath string) RouterGroup {
-	return &mainRouterGroup{
+func (engine *defaultEngine) Group(relativePath string) RouterGroup {
+	return &defaultRouterGroup{
 		internalRouterGroup: engine.internalEngine.Group(relativePath),
 	}
 }
 
-func (engine *mainEngine) Run(port int) error {
+func (engine *defaultEngine) Run(port int) error {
 	return engine.internalEngine.Run(fmt.Sprintf(":%d", port))
 }
 
-func (engine *mainEngine) FormatBindingError(bindError error) error {
+func (engine *defaultEngine) FormatBindingError(bindError error) error {
 	formattedError := &gin.Error{
 		Err: bindError,
 	}

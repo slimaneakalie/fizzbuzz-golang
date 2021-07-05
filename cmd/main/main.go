@@ -9,12 +9,12 @@ import (
 
 func main() {
 	serviceMode := fizzhttp.ReleaseMode // TODO get this from a config
-	mainEngineFactory := fizzhttp.NewEngineFactory(serviceMode)
+	httpEngineFactory := fizzhttp.NewDefaultHttpEngineFactory(serviceMode)
 
-	mainBuilder := stringListBuilder.NewMainStringListBuilder()
-	mainLogger := logger.NewMainLogger()
+	stringListBuilder := stringListBuilder.NewDefaultStringListBuilder()
+	logger := logger.NewDefaultLogger()
 
-	router := api.NewRouter(mainEngineFactory, mainBuilder, mainLogger)
+	router := api.NewRouter(httpEngineFactory, stringListBuilder, logger)
 
 	port := 9000 // TODO get this from a config
 	router.Run(port)

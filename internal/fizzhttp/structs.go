@@ -2,13 +2,13 @@ package fizzhttp
 
 import "github.com/gin-gonic/gin"
 
-type mainEngineFactory struct{}
+type defaultEngineFactory struct{}
 
-type mainEngine struct {
+type defaultEngine struct {
 	internalEngine *gin.Engine
 }
 
-type mainRouterGroup struct {
+type defaultRouterGroup struct {
 	internalRouterGroup *gin.RouterGroup
 }
 

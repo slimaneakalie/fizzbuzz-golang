@@ -5,11 +5,11 @@ import (
 	"strings"
 )
 
-func NewMainStringListBuilder() StringListBuilder {
-	return &mainStringListBuilder{}
+func NewDefaultStringListBuilder() StringListBuilder {
+	return &defaultStringListBuilder{}
 }
 
-func (builder *mainStringListBuilder) BuildStringList(buildInput *StringListBuildInput) []string {
+func (builder *defaultStringListBuilder) BuildStringList(buildInput *StringListBuildInput) []string {
 	stringList := make([]string, buildInput.Limit)
 	twoInputStringsJoined := strings.Join([]string{buildInput.FirstStr, buildInput.SecondStr}, "")
 

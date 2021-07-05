@@ -11,7 +11,7 @@ type router struct {
 	logger     logger.Logger
 }
 
-type mainFizzbuzzRequestAPIHandler struct {
+type defaultFizzbuzzRequestAPIHandler struct {
 	StringListBuilder     stringListBuilder.StringListBuilder
 	bindingErrorFormatter fizzhttp.BindingErrorFormatter
 }

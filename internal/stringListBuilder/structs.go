@@ -8,4 +8,4 @@ type StringListBuildInput struct {
 	SecondStr string
 }
 
-type mainStringListBuilder struct{}
+type defaultStringListBuilder struct{}

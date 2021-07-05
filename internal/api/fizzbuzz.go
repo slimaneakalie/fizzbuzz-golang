@@ -9,17 +9,17 @@ import (
 )
 
 func NewMainFizzbuzzRequestAPIHandler(stringListBuilder stringListBuilder.StringListBuilder, bindingErrorFormatter fizzhttp.BindingErrorFormatter) FizzbuzzRequestAPIHandler {
-	return &mainFizzbuzzRequestAPIHandler{
+	return &defaultFizzbuzzRequestAPIHandler{
 		StringListBuilder:     stringListBuilder,
 		bindingErrorFormatter: bindingErrorFormatter,
 	}
 }
 
-func (handler *mainFizzbuzzRequestAPIHandler) handleFizzbuzzRequest() fizzhttp.HandlerFunc {
+func (handler *defaultFizzbuzzRequestAPIHandler) handleFizzbuzzRequest() fizzhttp.HandlerFunc {
 	return handler.fizzbuzzRequestHandler
 }
 
-func (handler *mainFizzbuzzRequestAPIHandler) fizzbuzzRequestHandler(context fizzhttp.RequestContext) {
+func (handler *defaultFizzbuzzRequestAPIHandler) fizzbuzzRequestHandler(context fizzhttp.RequestContext) {
 	var userRequest fizzbuzzAPIRequest
 	if err := context.ShouldBindBodyWith(&userRequest, fizzhttp.JsonBinding); err != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, handler.bindingErrorFormatter(err))

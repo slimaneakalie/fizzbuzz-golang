@@ -1,3 +1,3 @@
 package logger
 
-type mainLogger struct{}
+type defaultLogger struct{}
