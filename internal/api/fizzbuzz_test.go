@@ -4,6 +4,8 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/stringListBuilder"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/testTooling/apiTestTooling"
@@ -51,6 +53,29 @@ var _ = Describe("Api package - fizzbuzz.go", func() {
 			Expect(testTooling.TestingStringListBuilder.GetNumberOfFuncCalls("BuildStringList")).To(Equal(0))
 		})
 	})
+
+	Context("toFizzbuzzListBuildInput function", func() {
+		It("should map *api.fizzbuzzAPIRequest to *stringListBuilder.StringListBuildInput always", func() {
+			apiRequest := fizzbuzzAPIRequest{
+				FirstInt:  3,
+				SecondInt: 5,
+				Limit:     100,
+				FirstStr:  "fizz",
+				SecondStr: "buzz",
+			}
+
+			expectedFizzbuzzListBuildInputt := &stringListBuilder.StringListBuildInput{
+				FirstInt:  apiRequest.FirstInt,
+				SecondInt: apiRequest.SecondInt,
+				Limit:     apiRequest.Limit,
+				FirstStr:  apiRequest.FirstStr,
+				SecondStr: apiRequest.SecondStr,
+			}
+
+			Expect(toFizzbuzzListBuildInput(&apiRequest)).To(Equal(expectedFizzbuzzListBuildInputt))
+		})
+	})
+
 })
 
 func invokeFizzbuzzRequestHandler(testTooling *apiTestTooling.Fizzbuzz) {
