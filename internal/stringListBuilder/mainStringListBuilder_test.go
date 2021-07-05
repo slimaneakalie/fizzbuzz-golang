@@ -1,4 +1,4 @@
-package fizzbuzz
+package stringListBuilder
 
 import (
 	"strings"

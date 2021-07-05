@@ -1,20 +1,22 @@
 package api
 
 import (
-	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzbuzz"
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/logger"
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/stringListBuilder"
 )
 
-type Router struct {
+type router struct {
 	httpEngine fizzhttp.Engine
+	logger     logger.Logger
 }
 
-type MainFizzbuzzRequestAPIHandler struct {
-	StringListBuilder     fizzbuzz.StringListBuilder
+type mainFizzbuzzRequestAPIHandler struct {
+	StringListBuilder     stringListBuilder.StringListBuilder
 	bindingErrorFormatter fizzhttp.BindingErrorFormatter
 }
 
-type FizzbuzzAPIRequest struct {
+type fizzbuzzAPIRequest struct {
 	FirstInt  int    `json:"firstInt" binding:"required"`
 	SecondInt int    `json:"secondInt" binding:"required"`
 	Limit     int    `json:"limit" binding:"required"`
@@ -22,6 +24,6 @@ type FizzbuzzAPIRequest struct {
 	SecondStr string `json:"secondStr" binding:"required"`
 }
 
-type FizzbuzzAPIResponse struct {
+type fizzbuzzAPIResponse struct {
 	FizzbuzzStringList []string `json:"fizzbuzzStringList"`
 }

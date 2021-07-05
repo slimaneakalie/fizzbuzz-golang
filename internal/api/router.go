@@ -1,33 +1,31 @@
 package api
 
 import (
-	"fmt"
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/logger"
 
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
 
-	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzbuzz"
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/stringListBuilder"
 )
 
-func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder fizzbuzz.StringListBuilder) *Router {
-	engine := httpEngineFactory.NewEngine()
+func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder stringListBuilder.StringListBuilder, logger logger.Logger) *router {
+	httpEngine := httpEngineFactory.NewEngine()
 
-	fizzbuzzRequestAPIHandler := MainFizzbuzzRequestAPIHandler{
-		StringListBuilder:     stringListBuilder,
-		bindingErrorFormatter: engine.FormatBindingError,
-	}
+	fizzbuzzRequestAPIHandler := NewMainFizzbuzzRequestAPIHandler(stringListBuilder, httpEngine.FormatBindingError)
 
-	group := engine.Group("/v1/fizzbuzz")
+	group := httpEngine.Group("/v1/stringListBuilder")
 	group.POST("/", fizzbuzzRequestAPIHandler.handleFizzbuzzRequest())
 
-	return &Router{
-		httpEngine: engine,
+	return &router{
+		httpEngine: httpEngine,
+		logger:     logger,
 	}
 }
 
-func (router *Router) Run(port int) {
-	fmt.Println("Running server on port", port)
+func (router *router) Run(port int) {
+	router.logger.Info("Running server on port", port)
 	err := router.httpEngine.Run(port)
 	if err != nil {
-		fmt.Println("Error running server caused by:", err.Error())
+		router.logger.Error("Error running server caused by:", err.Error())
 	}
 }

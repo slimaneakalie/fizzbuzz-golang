@@ -1,11 +1,15 @@
-package fizzbuzz
+package stringListBuilder
 
 import (
 	"strconv"
 	"strings"
 )
 
-func (builder *MainStringListBuilder) BuildStringList(buildInput *StringListBuildInput) []string {
+func NewMainStringListBuilder() StringListBuilder {
+	return &mainStringListBuilder{}
+}
+
+func (builder *mainStringListBuilder) BuildStringList(buildInput *StringListBuildInput) []string {
 	stringList := make([]string, buildInput.Limit)
 	twoInputStringsJoined := strings.Join([]string{buildInput.FirstStr, buildInput.SecondStr}, "")
 

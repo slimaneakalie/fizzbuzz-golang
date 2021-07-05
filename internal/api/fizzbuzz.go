@@ -5,15 +5,22 @@ import (
 
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
 
-	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzbuzz"
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/stringListBuilder"
 )
 
-func (handler *MainFizzbuzzRequestAPIHandler) handleFizzbuzzRequest() fizzhttp.HandlerFunc {
+func NewMainFizzbuzzRequestAPIHandler(stringListBuilder stringListBuilder.StringListBuilder, bindingErrorFormatter fizzhttp.BindingErrorFormatter) FizzbuzzRequestAPIHandler {
+	return &mainFizzbuzzRequestAPIHandler{
+		StringListBuilder:     stringListBuilder,
+		bindingErrorFormatter: bindingErrorFormatter,
+	}
+}
+
+func (handler *mainFizzbuzzRequestAPIHandler) handleFizzbuzzRequest() fizzhttp.HandlerFunc {
 	return handler.fizzbuzzRequestHandler
 }
 
-func (handler *MainFizzbuzzRequestAPIHandler) fizzbuzzRequestHandler(context fizzhttp.RequestContext) {
-	var userRequest FizzbuzzAPIRequest
+func (handler *mainFizzbuzzRequestAPIHandler) fizzbuzzRequestHandler(context fizzhttp.RequestContext) {
+	var userRequest fizzbuzzAPIRequest
 	if err := context.ShouldBindBodyWith(&userRequest, fizzhttp.JsonBinding); err != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, handler.bindingErrorFormatter(err))
 		return
@@ -22,15 +29,15 @@ func (handler *MainFizzbuzzRequestAPIHandler) fizzbuzzRequestHandler(context fiz
 	fizzbuzzListBuildInput := toFizzbuzzListBuildInput(&userRequest)
 	fizzbuzzStringList := handler.StringListBuilder.BuildStringList(fizzbuzzListBuildInput)
 
-	apiResponse := FizzbuzzAPIResponse{
+	apiResponse := fizzbuzzAPIResponse{
 		FizzbuzzStringList: fizzbuzzStringList,
 	}
 
 	context.JSON(http.StatusOK, apiResponse)
 }
 
-func toFizzbuzzListBuildInput(request *FizzbuzzAPIRequest) *fizzbuzz.StringListBuildInput {
-	return &fizzbuzz.StringListBuildInput{
+func toFizzbuzzListBuildInput(request *fizzbuzzAPIRequest) *stringListBuilder.StringListBuildInput {
+	return &stringListBuilder.StringListBuildInput{
 		FirstInt:  request.FirstInt,
 		SecondInt: request.SecondInt,
 		Limit:     request.Limit,

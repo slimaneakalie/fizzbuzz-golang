@@ -1,4 +1,4 @@
-package fizzbuzz
+package stringListBuilder
 
 type StringListBuildInput struct {
 	FirstInt  int
@@ -8,4 +8,4 @@ type StringListBuildInput struct {
 	SecondStr string
 }
 
-type MainStringListBuilder struct{}
+type mainStringListBuilder struct{}

@@ -2,7 +2,7 @@ package fizzhttp
 
 import "github.com/gin-gonic/gin"
 
-type MainEngineFactory struct{}
+type mainEngineFactory struct{}
 
 type mainEngine struct {
 	internalEngine *gin.Engine

@@ -6,12 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewEngineFactory(serviceMode string) *MainEngineFactory {
+func NewEngineFactory(serviceMode string) EngineFactory {
 	gin.SetMode(serviceMode)
-	return &MainEngineFactory{}
+	return &mainEngineFactory{}
 }
 
-func (factory *MainEngineFactory) NewEngine() Engine {
+func (factory *mainEngineFactory) NewEngine() Engine {
 	return &mainEngine{
 		internalEngine: gin.Default(),
 	}

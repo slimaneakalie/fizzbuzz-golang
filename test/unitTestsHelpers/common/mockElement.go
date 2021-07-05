@@ -16,12 +16,12 @@ func (mockElement *MockElement) RecordFuncCall(funcName string, callParamsInOrde
 	}
 }
 
-func (mockElement *MockElement) IsCalledNTimes(funcName string, n int) bool {
+func (mockElement *MockElement) FuncIsCalledExactlyNTimes(funcName string, n int) bool {
 	callData, _ := mockElement.funcCallsMap[funcName]
 	return callData != nil && len(callData) == n
 }
 
-func (mockElement *MockElement) IsCalledWithParamsExactly(funcName string, params ...interface{}) bool {
+func (mockElement *MockElement) FuncIsCalledFirstTimeWithParamsExact(funcName string, params ...interface{}) bool {
 	funcFirstCallParams := mockElement.getFuncFirstCallParamsInOrder(funcName)
 	for index, element := range funcFirstCallParams {
 		if params[index] != element {
@@ -32,7 +32,7 @@ func (mockElement *MockElement) IsCalledWithParamsExactly(funcName string, param
 	return true
 }
 
-func (mockElement *MockElement) IsCalledWithParamsPartially(funcName string, params ...interface{}) bool {
+func (mockElement *MockElement) FuncIsCalledFirstTimeWithParamsPartial(funcName string, params ...interface{}) bool {
 	funcFirstCallParams := mockElement.getFuncFirstCallParamsInOrder(funcName)
 	if funcFirstCallParams == nil {
 		return false
