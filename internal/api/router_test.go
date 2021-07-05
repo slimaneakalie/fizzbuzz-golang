@@ -20,9 +20,9 @@ var _ = Describe("Api package - router.go", func() {
 
 			expectedGroupFuncCallParam := []interface{}{"/v1/stringListBuilder"}
 			Expect(testTooling.TestingEngine.GetFuncFirstCallParamsInOrder("Group")).To(Equal(expectedGroupFuncCallParam))
-
 			Expect(testTooling.TestingEngine.RouterGroups).To(HaveLen(1))
 			Expect(testTooling.TestingEngine.RouterGroups[0].FuncIsCalledFirstTimeWithParamsPartial("POST", "/")).To(BeTrue())
+
 			Expect(router.httpEngine).To(Equal(testTooling.TestingEngine))
 			Expect(router.logger).To(Equal(testTooling.TestingLogger))
 		})
@@ -40,10 +40,9 @@ var _ = Describe("Api package - router.go", func() {
 			testTooling := apiTestTooling.PrepareRouterTestsTooling(httpEngineRunMethodOutput)
 			testRunRouterCommonExecutionPath(testTooling)
 
-			Expect(testTooling.TestingLogger.GetNumberOfFuncCalls("Error")).To(Equal(1))
-
 			expectedErrorFuncCallParams := []interface{}{"Error running server caused by:", httpEngineRunMethodOutput.Error()}
 			Expect(testTooling.TestingLogger.GetFuncFirstCallParamsInOrder("Error")).To(Equal(expectedErrorFuncCallParams))
+			Expect(testTooling.TestingLogger.GetNumberOfFuncCalls("Error")).To(Equal(1))
 		})
 
 	})
@@ -53,12 +52,12 @@ func testRunRouterCommonExecutionPath(testTooling *apiTestTooling.Router) {
 	router := NewRouter(testTooling.TestingEngineFactory, testTooling.TestingStringListBuilder, testTooling.TestingLogger)
 	port := 9000
 	router.Run(port)
-
-	Expect(testTooling.TestingLogger.GetNumberOfFuncCalls("Info")).To(Equal(1))
 	expectedInfoFuncCallParams := []interface{}{"Running server on port", port}
 	Expect(testTooling.TestingLogger.GetFuncFirstCallParamsInOrder("Info")).To(Equal(expectedInfoFuncCallParams))
+	Expect(testTooling.TestingLogger.GetNumberOfFuncCalls("Info")).To(Equal(1))
 
-	Expect(testTooling.TestingEngine.GetNumberOfFuncCalls("Run")).To(Equal(1))
 	expectedRunFuncCallParams := []interface{}{port}
 	Expect(testTooling.TestingEngine.GetFuncFirstCallParamsInOrder("Run")).To(Equal(expectedRunFuncCallParams))
+	Expect(testTooling.TestingEngine.GetNumberOfFuncCalls("Run")).To(Equal(1))
+
 }

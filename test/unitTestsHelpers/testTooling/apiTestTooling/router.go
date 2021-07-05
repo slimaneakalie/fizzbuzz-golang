@@ -12,7 +12,7 @@ func PrepareRouterTestsTooling(engineRunMethodOutput error) *Router {
 	return &Router{
 		TestingEngine:            testingEngine,
 		TestingEngineFactory:     fizzhttpMocks.NewTestingEngineFactory(testingEngine),
-		TestingStringListBuilder: fizzbuzzMocks.NewTestingStringListBuilder(),
+		TestingStringListBuilder: fizzbuzzMocks.NewTestingStringListBuilder(nil),
 		TestingLogger:            loggerMocks.NewTestingLogger(),
 	}
 }
