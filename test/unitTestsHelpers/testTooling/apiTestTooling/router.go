@@ -6,13 +6,13 @@ import (
 	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/loggerMocks"
 )
 
-func PrepareRouterTestsTooling(engineRunMethodOutput error) *RouterTestsTooling {
-	testingEngine := fizzhttpMocks.NewTestingEngine(engineRunMethodOutput)
+func PrepareRouterTestsTooling(engineRunMethodOutput error) *Router {
+	testingEngine := fizzhttpMocks.NewTestingEngine(engineRunMethodOutput, nil)
 
-	return &RouterTestsTooling{
-		TestingEngine:        testingEngine,
-		TestingEngineFactory: fizzhttpMocks.NewTestingEngineFactory(testingEngine),
-		StringListBuilder:    fizzbuzzMocks.NewTestingStringListBuilder(),
-		TestingLogger:        loggerMocks.NewTestingLogger(),
+	return &Router{
+		TestingEngine:            testingEngine,
+		TestingEngineFactory:     fizzhttpMocks.NewTestingEngineFactory(testingEngine),
+		TestingStringListBuilder: fizzbuzzMocks.NewTestingStringListBuilder(),
+		TestingLogger:            loggerMocks.NewTestingLogger(),
 	}
 }

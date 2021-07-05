@@ -8,7 +8,7 @@ import (
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/stringListBuilder"
 )
 
-func NewMainFizzbuzzRequestAPIHandler(stringListBuilder stringListBuilder.StringListBuilder, bindingErrorFormatter fizzhttp.BindingErrorFormatter) FizzbuzzRequestAPIHandler {
+func NewDefaultFizzbuzzRequestAPIHandler(stringListBuilder stringListBuilder.StringListBuilder, bindingErrorFormatter fizzhttp.BindingErrorFormatter) FizzbuzzRequestAPIHandler {
 	return &defaultFizzbuzzRequestAPIHandler{
 		StringListBuilder:     stringListBuilder,
 		bindingErrorFormatter: bindingErrorFormatter,

@@ -11,7 +11,7 @@ import (
 func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder stringListBuilder.StringListBuilder, logger logger.Logger) *router {
 	httpEngine := httpEngineFactory.NewEngine()
 
-	fizzbuzzRequestAPIHandler := NewMainFizzbuzzRequestAPIHandler(stringListBuilder, httpEngine.FormatBindingError)
+	fizzbuzzRequestAPIHandler := NewDefaultFizzbuzzRequestAPIHandler(stringListBuilder, httpEngine.FormatBindingError)
 
 	group := httpEngine.Group("/v1/stringListBuilder")
 	group.POST("/", fizzbuzzRequestAPIHandler.handleFizzbuzzRequest())

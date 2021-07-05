@@ -10,10 +10,11 @@ func NewTestingEngineFactory(testingEngine *TestingEngine) *TestingEngineFactory
 	}
 }
 
-func NewTestingEngine(runMethodOutput error) *TestingEngine {
+func NewTestingEngine(runMethodOutput error, formatBindingErrorOutput error) *TestingEngine {
 	return &TestingEngine{
-		RouterGroups:    []*TestingRouterGroup{},
-		RunMethodOutput: runMethodOutput,
+		RouterGroups:             []*TestingRouterGroup{},
+		runMethodOutput:          runMethodOutput,
+		formatBindingErrorOutput: formatBindingErrorOutput,
 	}
 }
 
@@ -31,10 +32,10 @@ func (engine *TestingEngine) Group(relativePath string) fizzhttp.RouterGroup {
 
 func (engine *TestingEngine) FormatBindingError(bindError error) error {
 	engine.RecordFuncCall("FormatBindingError", bindError)
-	return nil
+	return engine.formatBindingErrorOutput
 }
 
 func (engine *TestingEngine) Run(port int) error {
 	engine.RecordFuncCall("Run", port)
-	return nil
+	return engine.runMethodOutput
 }

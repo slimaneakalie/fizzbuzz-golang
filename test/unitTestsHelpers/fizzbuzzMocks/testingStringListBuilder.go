@@ -7,5 +7,6 @@ func NewTestingStringListBuilder() *TestingStringListBuilder {
 }
 
 func (builder *TestingStringListBuilder) BuildStringList(input *stringListBuilder.StringListBuildInput) []string {
+	builder.RecordFuncCall("BuildStringList", input)
 	return nil
 }

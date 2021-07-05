@@ -6,9 +6,9 @@ import (
 	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/loggerMocks"
 )
 
-type RouterTestsTooling struct {
-	TestingEngine        *fizzhttpMocks.TestingEngine
-	TestingEngineFactory *fizzhttpMocks.TestingEngineFactory
-	StringListBuilder    *fizzbuzzMocks.TestingStringListBuilder
-	TestingLogger        *loggerMocks.TestingLogger
+type Router struct {
+	TestingEngine            *fizzhttpMocks.TestingEngine
+	TestingEngineFactory     *fizzhttpMocks.TestingEngineFactory
+	TestingStringListBuilder *fizzbuzzMocks.TestingStringListBuilder
+	TestingLogger            *loggerMocks.TestingLogger
 }

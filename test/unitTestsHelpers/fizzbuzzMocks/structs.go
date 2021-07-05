@@ -1,3 +1,7 @@
 package fizzbuzzMocks
 
-type TestingStringListBuilder struct{}
+import "github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/common"
+
+type TestingStringListBuilder struct {
+	common.MockElement
+}

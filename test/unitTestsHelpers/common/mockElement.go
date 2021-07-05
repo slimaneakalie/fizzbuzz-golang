@@ -16,24 +16,13 @@ func (mockElement *MockElement) RecordFuncCall(funcName string, callParamsInOrde
 	}
 }
 
-func (mockElement *MockElement) FuncIsCalledExactlyNTimes(funcName string, n int) bool {
+func (mockElement *MockElement) GetNumberOfFuncCalls(funcName string) int {
 	callData, _ := mockElement.funcCallsMap[funcName]
-	return callData != nil && len(callData) == n
-}
-
-func (mockElement *MockElement) FuncIsCalledFirstTimeWithParamsExact(funcName string, params ...interface{}) bool {
-	funcFirstCallParams := mockElement.getFuncFirstCallParamsInOrder(funcName)
-	for index, element := range funcFirstCallParams {
-		if params[index] != element {
-			return false
-		}
-	}
-
-	return true
+	return len(callData)
 }
 
 func (mockElement *MockElement) FuncIsCalledFirstTimeWithParamsPartial(funcName string, params ...interface{}) bool {
-	funcFirstCallParams := mockElement.getFuncFirstCallParamsInOrder(funcName)
+	funcFirstCallParams := mockElement.GetFuncFirstCallParamsInOrder(funcName)
 	if funcFirstCallParams == nil {
 		return false
 	}
@@ -47,7 +36,7 @@ func (mockElement *MockElement) FuncIsCalledFirstTimeWithParamsPartial(funcName 
 	return true
 }
 
-func (mockElement *MockElement) getFuncFirstCallParamsInOrder(funcName string) []interface{} {
+func (mockElement *MockElement) GetFuncFirstCallParamsInOrder(funcName string) []interface{} {
 	callData, ok := mockElement.funcCallsMap[funcName]
 	if !ok || callData == nil {
 		return nil

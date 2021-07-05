@@ -11,10 +11,16 @@ type TestingEngineFactory struct {
 
 type TestingEngine struct {
 	common.MockElement
-	RouterGroups    []*TestingRouterGroup
-	RunMethodOutput error
+	RouterGroups             []*TestingRouterGroup
+	runMethodOutput          error
+	formatBindingErrorOutput error
 }
 
 type TestingRouterGroup struct {
 	common.MockElement
+}
+
+type TestingRequestContext struct {
+	common.MockElement
+	shouldBindBodyWithOutput error
 }
