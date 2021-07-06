@@ -55,7 +55,7 @@ var _ = Describe("Api package - fizzbuzz.go", func() {
 	})
 
 	Context("toFizzbuzzListBuildInput function", func() {
-		It("should map *api.fizzbuzzAPIRequest to *stringListBuilder.StringListBuildInput always", func() {
+		It("should map *api.fizzbuzzAPIRequest to *stringListBuilderTooling.StringListBuildInput always", func() {
 			apiRequest := fizzbuzzAPIRequest{
 				FirstInt:  3,
 				SecondInt: 5,

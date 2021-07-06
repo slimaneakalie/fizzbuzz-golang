@@ -9,5 +9,5 @@ import (
 
 func TestFizzbuzz(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Fizzbuzz Suite")
+	RunSpecs(t, "StringListBuilder Suite")
 }

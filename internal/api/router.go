@@ -13,7 +13,7 @@ func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder strin
 
 	fizzbuzzRequestAPIHandler := NewDefaultFizzbuzzRequestAPIHandler(stringListBuilder, httpEngine.FormatBindingError)
 
-	group := httpEngine.Group("/v1/stringListBuilder")
+	group := httpEngine.Group("/v1/stringListBuilderTooling")
 	group.POST("/", fizzbuzzRequestAPIHandler.handleFizzbuzzRequest())
 
 	return &router{

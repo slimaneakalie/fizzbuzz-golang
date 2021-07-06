@@ -11,14 +11,14 @@ import (
 
 var _ = Describe("Api package - router.go", func() {
 	Context("router.NewRouter function", func() {
-		It("should create a new router while using the injected httpEngineFactory and stringListBuilder", func() {
+		It("should create a new router while using the injected httpEngineFactory and stringListBuilderTooling", func() {
 			testTooling := apiTestTooling.PrepareRouterTestsTooling(nil)
 
 			router := NewRouter(testTooling.TestingEngineFactory, testTooling.TestingStringListBuilder, testTooling.TestingLogger)
 
 			Expect(testTooling.TestingEngineFactory.GetNumberOfFuncCalls("NewEngine")).To(Equal(1))
 
-			expectedGroupFuncCallParam := []interface{}{"/v1/stringListBuilder"}
+			expectedGroupFuncCallParam := []interface{}{"/v1/stringListBuilderTooling"}
 			Expect(testTooling.TestingEngine.GetFuncFirstCallParamsInOrder("Group")).To(Equal(expectedGroupFuncCallParam))
 			Expect(testTooling.TestingEngine.RouterGroups).To(HaveLen(1))
 			Expect(testTooling.TestingEngine.RouterGroups[0].FuncIsCalledFirstTimeWithParamsPartial("POST", "/")).To(BeTrue())

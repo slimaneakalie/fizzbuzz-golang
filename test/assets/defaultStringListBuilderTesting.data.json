@@ -1,0 +1,45 @@
+[
+  {
+    "buildInput": {
+      "firstInt": 3,
+      "secondInt": 15,
+      "limit": 100,
+      "firstStr": "fizz",
+      "secondStr": "buzz"
+    },
+    "expectedOutput": [""]
+  },
+
+  {
+    "buildInput": {
+      "firstInt": 1,
+      "secondInt": 2,
+      "limit": 10,
+      "firstStr": "buzz",
+      "secondStr": "fizz"
+    },
+    "expectedOutput": [""]
+  },
+
+  {
+    "buildInput": {
+      "firstInt": 30,
+      "secondInt": 10,
+      "limit": 9,
+      "firstStr": "buzz",
+      "secondStr": "fizz"
+    },
+    "expectedOutput": [""]
+  },
+
+  {
+    "buildInput": {
+      "firstInt": 20,
+      "secondInt": 19,
+      "limit": 93,
+      "firstStr": "bit",
+      "secondStr": "coin"
+    },
+    "expectedOutput": [""]
+  }
+]
