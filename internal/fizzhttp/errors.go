@@ -2,6 +2,7 @@ package fizzhttp
 
 import (
 	"fmt"
+	"strings"
 )
 
 const (
@@ -33,16 +34,22 @@ func createValidationErrorServerResponse(validationErrors validationErrorsType) 
 	return NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, responseFieldErrors)
 }
 
-func generateFieldErrorResponseMessage(ve fieldValidationError) string {
-	switch ve.Tag() {
+func generateFieldErrorResponseMessage(fve fieldValidationError) string {
+	switch fve.Tag() {
 	case "required":
-		return fmt.Sprintf("%s is required", ve.Field())
+		return fmt.Sprintf("%s is required", fve.Field())
 
 	default:
-		return fmt.Sprintf("Invalid value for field %s ", ve.Field())
+		return fmt.Sprintf("Invalid value for field %s", fve.Field())
 	}
 }
 
-func (ve validationErrorsType) Error() string {
-	return ""
+func (validationErrors validationErrorsType) Error() string {
+	var errorMessages []string
+	for _, vError := range validationErrors {
+		errorMessage := generateFieldErrorResponseMessage(vError)
+		errorMessages = append(errorMessages, errorMessage)
+	}
+
+	return strings.Join(errorMessages, ",\n")
 }

@@ -49,4 +49,26 @@ var _ = Describe("fizzhttp package - errors.go", func() {
 			Expect(actualErrorServerResponse).To(Equal(expectedErrorServerResponse))
 		})
 	})
+
+	Context("generateFieldErrorResponseMessage function", func() {
+		It("should create the error message according to the tag and field name", func() {
+			fieldErrorsSample := []fieldValidationError{
+				fizzhttpTestTooling.NewTestingFieldValidationError("required", "firstInt"),
+				fizzhttpTestTooling.NewTestingFieldValidationError("", "secondInt"),
+				fizzhttpTestTooling.NewTestingFieldValidationError("required", "thirdInt"),
+			}
+
+			expectedErrorMessages := []string{
+				"firstInt is required",
+				"Invalid value for field secondInt",
+				"thirdInt is required",
+			}
+
+			for i, fieldError := range fieldErrorsSample {
+				expectedErrorMessage := expectedErrorMessages[i]
+				actualErrorMessage := generateFieldErrorResponseMessage(fieldError)
+				Expect(actualErrorMessage).To(Equal(expectedErrorMessage))
+			}
+		})
+	})
 })
