@@ -22,4 +22,20 @@ var _ = Describe("fizzhttp package - errorObjectHelpers.go", func() {
 			Expect(actual).To(Equal(expected))
 		})
 	})
+
+	Context("NewFieldError function", func() {
+		It("should map params to a valid responseFieldError object", func() {
+			errorType, field, errorDetail := BadRequestResponseTypeCode, "limit", "invalid value"
+
+			expected := &responseFieldError{
+				Type:   errorType,
+				Field:  field,
+				Detail: errorDetail,
+			}
+
+			actual := NewFieldError(errorType, field, errorDetail)
+
+			Expect(actual).To(Equal(expected))
+		})
+	})
 })
