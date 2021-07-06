@@ -1,8 +1,6 @@
 package fizzhttpMocks
 
-import (
-	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
-)
+import "github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
 
 func NewTestingEngineFactory(testingEngine *TestingEngine) *TestingEngineFactory {
 	return &TestingEngineFactory{

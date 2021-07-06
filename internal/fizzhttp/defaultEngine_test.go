@@ -5,7 +5,7 @@ import (
 	"errors"
 	"reflect"
 
-	"github.com/go-playground/validator/v10"
+	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/testTooling/fizzhttpTestTooling"
 
 	"github.com/gin-gonic/gin"
 
@@ -32,7 +32,10 @@ var _ = Describe("fizzhttp package - defaultEngine.go", func() {
 		})
 
 		It("should return the validation errors format when provided with a validationErrorsType error", func() {
-			validationErrorsExample := validator.ValidationErrors{}
+			validationErrorsExample := validationErrorsType{
+				fizzhttpTestTooling.NewTestingFieldValidationError("required", "field1"),
+			}
+
 			expectedFormattedError := &gin.Error{
 				Err:  validationErrorsExample,
 				Type: gin.ErrorTypePublic,

@@ -1,7 +1,6 @@
 package fizzhttp
 
 import (
-	"github.com/go-playground/validator/v10"
 	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/testTooling/fizzhttpTestTooling"
 
 	. "github.com/onsi/ginkgo"
@@ -13,7 +12,7 @@ var _ = Describe("fizzhttp package - errors.go", func() {
 		It("should map the requestUnmarshalError correctly", func() {
 			unmarshalErrorExample := fizzhttpTestTooling.NewRequestUnmarshalErrorType("fieldName", "string", 123)
 			sampleErrorDetail := generateUnmarshalErrorResponseMessage(unmarshalErrorExample)
-			sampleFieldsErrorr := []*fieldError{NewFieldError(ParamTypeMismatchErrorCode, unmarshalErrorExample.Field, sampleErrorDetail)}
+			sampleFieldsErrorr := []*responseFieldError{NewFieldError(ParamTypeMismatchErrorCode, unmarshalErrorExample.Field, sampleErrorDetail)}
 			expected := NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, sampleFieldsErrorr)
 
 			actual := createUnmarshalErrorServerResponse(unmarshalErrorExample)
@@ -33,11 +32,21 @@ var _ = Describe("fizzhttp package - errors.go", func() {
 
 	Context("createValidationErrorServerResponse function", func() {
 		It("should create the correct error http response based on the validation errors of the user query", func() {
-			expected := NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, nil)
-			sampleErrors := Mock Validation error interface
+			fieldErrorsSample := []fieldValidationError{
+				fizzhttpTestTooling.NewTestingFieldValidationError("required", "field1"),
+				fizzhttpTestTooling.NewTestingFieldValidationError("", "field2"),
+				fizzhttpTestTooling.NewTestingFieldValidationError("required", "field3"),
+			}
 
-			actual := createValidationErrorServerResponse(sampleErrors)
-			Expect(actual).To(Equal(expected))
+			expectedResponseErrors := []*responseFieldError{
+				NewFieldError(InvalidParamValueErrorCode, fieldErrorsSample[0].Field(), generateFieldErrorResponseMessage(fieldErrorsSample[0])),
+				NewFieldError(InvalidParamValueErrorCode, fieldErrorsSample[1].Field(), generateFieldErrorResponseMessage(fieldErrorsSample[1])),
+				NewFieldError(InvalidParamValueErrorCode, fieldErrorsSample[2].Field(), generateFieldErrorResponseMessage(fieldErrorsSample[2])),
+			}
+			expectedErrorServerResponse := NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, expectedResponseErrors)
+
+			actualErrorServerResponse := createValidationErrorServerResponse(fieldErrorsSample)
+			Expect(actualErrorServerResponse).To(Equal(expectedErrorServerResponse))
 		})
 	})
 })

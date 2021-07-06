@@ -13,7 +13,7 @@ const (
 func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) *httpErrorResponseMetadata {
 	errorDetail := generateUnmarshalErrorResponseMessage(unmarshalError)
 	currentFieldError := NewFieldError(ParamTypeMismatchErrorCode, unmarshalError.Field, errorDetail)
-	responseFieldErrors := []*fieldError{currentFieldError}
+	responseFieldErrors := []*responseFieldError{currentFieldError}
 
 	return NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, responseFieldErrors)
 }
@@ -23,7 +23,7 @@ func generateUnmarshalErrorResponseMessage(unmarshalError requestUnmarshalErrorT
 }
 
 func createValidationErrorServerResponse(validationErrors validationErrorsType) *httpErrorResponseMetadata {
-	var responseFieldErrors []*fieldError
+	var responseFieldErrors []*responseFieldError
 	for _, validationError := range validationErrors {
 		currentFieldErrorDetail := generateFieldErrorResponseMessage(validationError)
 		currentFieldError := NewFieldError(InvalidParamValueErrorCode, validationError.Field(), currentFieldErrorDetail)
@@ -41,4 +41,8 @@ func generateFieldErrorResponseMessage(ve fieldValidationError) string {
 	default:
 		return fmt.Sprintf("Invalid value for field %s ", ve.Field())
 	}
+}
+
+func (ve validationErrorsType) Error() string {
+	return ""
 }
