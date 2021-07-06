@@ -21,7 +21,7 @@ func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType
 }
 
 func generateUnmarshalErrorResponseMessage(unmarshalError requestUnmarshalErrorType) string {
-	return fmt.Sprintf("expected type %s instead of %s ", unmarshalError.Value, unmarshalError.Type.String())
+	return fmt.Sprintf("expected type %s instead of %s", unmarshalError.Value, unmarshalError.Type.String())
 }
 
 func createValidationErrorServerResponse(validationErrors validationErrorsType) *httpErrorResponseMetadata {
