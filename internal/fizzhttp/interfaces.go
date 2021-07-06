@@ -20,3 +20,8 @@ type RequestContext interface {
 	AbortWithStatusJSON(statusCode int, responseObject interface{})
 	JSON(code int, obj interface{})
 }
+
+type fieldValidationError interface {
+	Tag() string
+	Field() string
+}

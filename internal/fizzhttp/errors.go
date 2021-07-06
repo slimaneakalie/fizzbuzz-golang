@@ -2,8 +2,6 @@ package fizzhttp
 
 import (
 	"fmt"
-
-	"github.com/go-playground/validator/v10"
 )
 
 const (
@@ -35,7 +33,7 @@ func createValidationErrorServerResponse(validationErrors validationErrorsType) 
 	return NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, responseFieldErrors)
 }
 
-func generateFieldErrorResponseMessage(ve validator.FieldError) string {
+func generateFieldErrorResponseMessage(ve fieldValidationError) string {
 	switch ve.Tag() {
 	case "required":
 		return fmt.Sprintf("%s is required", ve.Field())

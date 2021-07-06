@@ -34,7 +34,7 @@ var _ = Describe("fizzhttp package - errors.go", func() {
 	Context("createValidationErrorServerResponse function", func() {
 		It("should create the correct error http response based on the validation errors of the user query", func() {
 			expected := NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, nil)
-			sampleErrors := validator.ValidationErrors{}
+			sampleErrors := Mock Validation error interface
 
 			actual := createValidationErrorServerResponse(sampleErrors)
 			Expect(actual).To(Equal(expected))
