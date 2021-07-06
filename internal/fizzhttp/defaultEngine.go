@@ -27,20 +27,21 @@ func (engine *defaultEngine) Run(port int) error {
 	return engine.internalEngine.Run(fmt.Sprintf(":%d", port))
 }
 
-func (engine *defaultEngine) FormatBindingError(bindError error) error {
+func (engine *defaultEngine) FormatBindingError(bindingError error) error {
 	formattedError := &gin.Error{
-		Err: bindError,
+		Err:  bindingError,
+		Type: gin.ErrorTypePublic,
 	}
 
-	switch bindError.(type) {
+	switch bindingError.(type) {
 	case requestUnmarshalErrorType:
-		formattedError.Meta = createUnmarshalErrorServerResponse(bindError.(requestUnmarshalErrorType))
+		formattedError.Meta = createUnmarshalErrorServerResponse(bindingError.(requestUnmarshalErrorType))
 
 	case validationErrorsType:
-		formattedError.Meta = createValidationErrorServerResponse(bindError.(validationErrorsType))
+		formattedError.Meta = createValidationErrorServerResponse(bindingError.(validationErrorsType))
 
 	default:
-		formattedError.Meta = badRequestServerResponsePayload{
+		formattedError.Meta = httpErrorResponseMetadata{
 			Type: BadRequestResponseTypeCode,
 		}
 	}

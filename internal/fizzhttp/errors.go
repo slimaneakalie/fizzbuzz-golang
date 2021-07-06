@@ -12,8 +12,8 @@ const (
 	ParamTypeMismatchErrorCode = "ParamTypeMismatch"
 )
 
-func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) badRequestServerResponsePayload {
-	return badRequestServerResponsePayload{
+func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) httpErrorResponseMetadata {
+	return httpErrorResponseMetadata{
 		Type: BadRequestResponseTypeCode,
 		Metadata: []fieldError{{
 			Type:   ParamTypeMismatchErrorCode,
@@ -27,7 +27,7 @@ func generateUnmarshalErrorResponseMessage(unmarshalError requestUnmarshalErrorT
 	return fmt.Sprintf("expected type %s instead of %s", unmarshalError.Type.String(), unmarshalError.Value)
 }
 
-func createValidationErrorServerResponse(validationErrors validationErrorsType) badRequestServerResponsePayload {
+func createValidationErrorServerResponse(validationErrors validationErrorsType) httpErrorResponseMetadata {
 	var fieldErrors []fieldError
 	for _, validationError := range validationErrors {
 		fieldErrors = append(fieldErrors, fieldError{
@@ -37,7 +37,7 @@ func createValidationErrorServerResponse(validationErrors validationErrorsType) 
 		})
 	}
 
-	return badRequestServerResponsePayload{
+	return httpErrorResponseMetadata{
 		Type:     BadRequestResponseTypeCode,
 		Metadata: fieldErrors,
 	}

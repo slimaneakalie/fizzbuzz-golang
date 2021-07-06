@@ -1,7 +1,5 @@
 package fizzhttp
 
-import "github.com/gin-gonic/gin/binding"
-
 type EngineFactory interface {
 	NewEngine() Engine
 }
@@ -18,7 +16,7 @@ type RouterGroup interface {
 }
 
 type RequestContext interface {
-	ShouldBindBodyWith(targetObjectPointer interface{}, bindingBody binding.BindingBody) (err error)
+	ShouldBindBodyWith(targetObjectPointer interface{}, requestBody bindingBodyType) (err error)
 	AbortWithStatusJSON(statusCode int, responseObject interface{})
 	JSON(code int, obj interface{})
 }
