@@ -21,6 +21,7 @@ var _ = Describe("fizzhttp package - defaultEngine.go", func() {
 				Value: "int",
 				Type:  reflect.TypeOf("a"),
 			}
+
 			expectedFormattedError := &gin.Error{
 				Err:  unmarshalErrorExample,
 				Type: gin.ErrorTypePublic,

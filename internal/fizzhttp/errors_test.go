@@ -1,18 +1,29 @@
 package fizzhttp
 
 import (
-	"strings"
+	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/testTooling/fizzhttpTestTooling"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("the strings package", func() {
-	Context("strings.Contains()", func() {
-		When("the string contains the substring in the middle", func() {
-			It("returns `true`", func() {
-				Expect(strings.Contains("Ginkgo is awesome", "is")).To(BeTrue())
-			})
+var _ = Describe("fizzhttp package - errors.go", func() {
+	Context("createUnmarshalErrorServerResponse function", func() {
+		It("should map the requestUnmarshalError correctly", func() {
+			unmarshalErrorExample := fizzhttpTestTooling.NewRequestUnmarshalErrorType("fieldName", "string", 123)
+			sampleErrorDetail := generateUnmarshalErrorResponseMessage(unmarshalErrorExample)
+			sampleFieldsErrorr := []*fieldError{NewFieldError(ParamTypeMismatchErrorCode, unmarshalErrorExample.Field, sampleErrorDetail)}
+			expected := NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, sampleFieldsErrorr)
+
+			actual := createUnmarshalErrorServerResponse(unmarshalErrorExample)
+
+			Expect(actual).To(Equal(expected))
+		})
+	})
+
+	Context("generateUnmarshalErrorResponseMessage function", func() {
+		It("should return the correct message based on the unmarshalling error", func() {
+
 		})
 	})
 })

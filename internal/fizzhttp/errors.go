@@ -12,35 +12,27 @@ const (
 	ParamTypeMismatchErrorCode = "ParamTypeMismatch"
 )
 
-func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) httpErrorResponseMetadata {
-	return httpErrorResponseMetadata{
-		Type: BadRequestResponseTypeCode,
-		Metadata: []fieldError{{
-			Type:   ParamTypeMismatchErrorCode,
-			Field:  unmarshalError.Field,
-			Detail: generateUnmarshalErrorResponseMessage(unmarshalError),
-		}},
-	}
+func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) *httpErrorResponseMetadata {
+	errorDetail := generateUnmarshalErrorResponseMessage(unmarshalError)
+	currentFieldError := NewFieldError(ParamTypeMismatchErrorCode, unmarshalError.Field, errorDetail)
+	responseFieldErrors := []*fieldError{currentFieldError}
+
+	return NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, responseFieldErrors)
 }
 
 func generateUnmarshalErrorResponseMessage(unmarshalError requestUnmarshalErrorType) string {
-	return fmt.Sprintf("expected type %s instead of %s", unmarshalError.Type.String(), unmarshalError.Value)
+	return fmt.Sprintf("expected type %s instead of %s ", unmarshalError.Value, unmarshalError.Type.String())
 }
 
-func createValidationErrorServerResponse(validationErrors validationErrorsType) httpErrorResponseMetadata {
-	var fieldErrors []fieldError
+func createValidationErrorServerResponse(validationErrors validationErrorsType) *httpErrorResponseMetadata {
+	var responseFieldErrors []*fieldError
 	for _, validationError := range validationErrors {
-		fieldErrors = append(fieldErrors, fieldError{
-			Type:   InvalidParamValueErrorCode,
-			Field:  validationError.Field(),
-			Detail: generateFieldErrorResponseMessage(validationError),
-		})
+		currentFieldErrorDetail := generateFieldErrorResponseMessage(validationError)
+		currentFieldError := NewFieldError(InvalidParamValueErrorCode, validationError.Field(), currentFieldErrorDetail)
+		responseFieldErrors = append(responseFieldErrors, currentFieldError)
 	}
 
-	return httpErrorResponseMetadata{
-		Type:     BadRequestResponseTypeCode,
-		Metadata: fieldErrors,
-	}
+	return NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, responseFieldErrors)
 }
 
 func generateFieldErrorResponseMessage(ve validator.FieldError) string {

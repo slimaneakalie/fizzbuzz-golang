@@ -13,8 +13,8 @@ type defaultRouterGroup struct {
 }
 
 type httpErrorResponseMetadata struct {
-	Type     string       `json:"type"`
-	Metadata []fieldError `json:"errors,omitempty"`
+	Type        string        `json:"type"`
+	FieldErrors []*fieldError `json:"fieldErrors,omitempty"`
 }
 
 type fieldError struct {
