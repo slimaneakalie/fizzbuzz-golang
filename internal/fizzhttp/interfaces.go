@@ -1,5 +1,7 @@
 package fizzhttp
 
+import "net/http"
+
 type EngineFactory interface {
 	NewEngine() Engine
 }
@@ -8,6 +10,7 @@ type Engine interface {
 	Group(relativePath string) RouterGroup
 	FormatBindingError(bindError error) error
 	Run(port int) error
+	ServeHTTP(http.ResponseWriter, *http.Request)
 }
 
 type RouterGroup interface {

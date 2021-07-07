@@ -9,7 +9,7 @@ func NewDefaultStringListBuilder() StringListBuilder {
 	return &defaultStringListBuilder{}
 }
 
-func (builder *defaultStringListBuilder) BuildStringList(buildInput *StringListBuildInput) []string {
+func (builder *defaultStringListBuilder) BuildStringList(buildInput *BuildInput) []string {
 	stringList := make([]string, buildInput.Limit)
 	twoInputStringsJoined := strings.Join([]string{buildInput.FirstStr, buildInput.SecondStr}, "")
 

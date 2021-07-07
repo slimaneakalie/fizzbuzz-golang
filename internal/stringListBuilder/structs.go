@@ -1,6 +1,6 @@
 package stringListBuilder
 
-type StringListBuildInput struct {
+type BuildInput struct {
 	FirstInt  int    `json:"firstInt"`
 	SecondInt int    `json:"secondInt"`
 	Limit     int    `json:"limit"`

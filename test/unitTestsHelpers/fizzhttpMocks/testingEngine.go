@@ -1,6 +1,10 @@
 package fizzhttpMocks
 
-import "github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
+import (
+	"net/http"
+
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
+)
 
 func NewTestingEngineFactory(testingEngine *TestingEngine) *TestingEngineFactory {
 	return &TestingEngineFactory{
@@ -36,4 +40,8 @@ func (engine *TestingEngine) FormatBindingError(bindError error) error {
 func (engine *TestingEngine) Run(port int) error {
 	engine.RecordFuncCall("Run", port)
 	return engine.runMethodOutput
+}
+
+func (engine *TestingEngine) ServeHTTP(respWriter http.ResponseWriter, request *http.Request) {
+	engine.RecordFuncCall("ServeHTTP", respWriter, request)
 }

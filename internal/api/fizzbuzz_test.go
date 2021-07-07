@@ -19,7 +19,7 @@ var _ = Describe("Api package - fizzbuzz.go", func() {
 
 			invokeFizzbuzzRequestHandler(testTooling)
 
-			expectedApiResponse := fizzbuzzAPIResponse{
+			expectedApiResponse := FizzbuzzAPIResponse{
 				FizzbuzzStringList: finalStringList,
 			}
 			expectedJSONFuncCallParams := []interface{}{http.StatusOK, expectedApiResponse}
@@ -28,7 +28,7 @@ var _ = Describe("Api package - fizzbuzz.go", func() {
 			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("AbortWithStatusJSON")).To(Equal(0))
 			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("ShouldBindBodyWith")).To(Equal(1))
 
-			var userRequest fizzbuzzAPIRequest
+			var userRequest FizzbuzzAPIRequest
 			expectedBuildStringListCallParams := []interface{}{toFizzbuzzListBuildInput(&userRequest)}
 			Expect(testTooling.TestingStringListBuilder.GetFuncFirstCallParamsInOrder("BuildStringList")).To(Equal(expectedBuildStringListCallParams))
 			Expect(testTooling.TestingStringListBuilder.GetNumberOfFuncCalls("BuildStringList")).To(Equal(1))
@@ -55,8 +55,8 @@ var _ = Describe("Api package - fizzbuzz.go", func() {
 	})
 
 	Context("toFizzbuzzListBuildInput function", func() {
-		It("should map *api.fizzbuzzAPIRequest to *stringListBuilderTooling.StringListBuildInput always", func() {
-			apiRequest := fizzbuzzAPIRequest{
+		It("should map *api.FizzbuzzAPIRequest to *stringListBuilderTooling.BuildInput always", func() {
+			apiRequest := FizzbuzzAPIRequest{
 				FirstInt:  3,
 				SecondInt: 5,
 				Limit:     100,
@@ -64,7 +64,7 @@ var _ = Describe("Api package - fizzbuzz.go", func() {
 				SecondStr: "buzz",
 			}
 
-			expectedFizzbuzzListBuildInputt := &stringListBuilder.StringListBuildInput{
+			expectedFizzbuzzListBuildInputt := &stringListBuilder.BuildInput{
 				FirstInt:  apiRequest.FirstInt,
 				SecondInt: apiRequest.SecondInt,
 				Limit:     apiRequest.Limit,

@@ -1,6 +1,8 @@
 package fizzhttp
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func (group *defaultRouterGroup) POST(relativePath string, handler HandlerFunc) {
 	group.internalRouterGroup.POST(relativePath, func(context *gin.Context) {

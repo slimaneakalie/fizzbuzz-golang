@@ -9,26 +9,26 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Api package - router.go", func() {
-	Context("router.NewRouter function", func() {
-		It("should create a new router while using the injected httpEngineFactory and stringListBuilderTooling", func() {
+var _ = Describe("Api package - Router.go", func() {
+	Context("Router.NewRouter function", func() {
+		It("should create a new Router while using the injected httpEngineFactory and stringListBuilderTooling", func() {
 			testTooling := apiTestTooling.PrepareRouterTestsTooling(nil)
 
 			router := NewRouter(testTooling.TestingEngineFactory, testTooling.TestingStringListBuilder, testTooling.TestingLogger)
 
 			Expect(testTooling.TestingEngineFactory.GetNumberOfFuncCalls("NewEngine")).To(Equal(1))
 
-			expectedGroupFuncCallParam := []interface{}{"/v1/stringListBuilderTooling"}
+			expectedGroupFuncCallParam := []interface{}{"/v1/fizzbuzz"}
 			Expect(testTooling.TestingEngine.GetFuncFirstCallParamsInOrder("Group")).To(Equal(expectedGroupFuncCallParam))
 			Expect(testTooling.TestingEngine.RouterGroups).To(HaveLen(1))
-			Expect(testTooling.TestingEngine.RouterGroups[0].FuncIsCalledFirstTimeWithParamsPartial("POST", "/")).To(BeTrue())
+			Expect(testTooling.TestingEngine.RouterGroups[0].FuncIsCalledFirstTimeWithParamsPartial("POST", "")).To(BeTrue())
 
-			Expect(router.httpEngine).To(Equal(testTooling.TestingEngine))
+			Expect(router.HttpEngine).To(Equal(testTooling.TestingEngine))
 			Expect(router.logger).To(Equal(testTooling.TestingLogger))
 		})
 	})
 
-	Context("router.Run function", func() {
+	Context("Router.Run function", func() {
 		It("should start the http server and log the port", func() {
 			testTooling := apiTestTooling.PrepareRouterTestsTooling(nil)
 			testRunRouterCommonExecutionPath(testTooling)

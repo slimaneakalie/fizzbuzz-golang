@@ -1,5 +1,5 @@
 package stringListBuilder
 
 type StringListBuilder interface {
-	BuildStringList(*StringListBuildInput) []string
+	BuildStringList(*BuildInput) []string
 }

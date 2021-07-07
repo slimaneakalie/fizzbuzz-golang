@@ -2,6 +2,7 @@ package fizzhttp
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -47,4 +48,8 @@ func (engine *defaultEngine) FormatBindingError(bindingError error) error {
 	}
 
 	return formattedError
+}
+
+func (engine *defaultEngine) ServeHTTP(respWriter http.ResponseWriter, request *http.Request) {
+	engine.internalEngine.ServeHTTP(respWriter, request)
 }

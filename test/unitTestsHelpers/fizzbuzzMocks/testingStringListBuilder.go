@@ -8,7 +8,7 @@ func NewTestingStringListBuilder(buildStringListOutput []string) *TestingStringL
 	}
 }
 
-func (builder *TestingStringListBuilder) BuildStringList(input *stringListBuilder.StringListBuildInput) []string {
+func (builder *TestingStringListBuilder) BuildStringList(input *stringListBuilder.BuildInput) []string {
 	builder.RecordFuncCall("BuildStringList", input)
 	return builder.buildStringListOutput
 }
