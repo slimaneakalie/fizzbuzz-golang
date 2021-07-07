@@ -1,11 +1,11 @@
 package stringListBuilder
 
 type StringListBuildInput struct {
-	FirstInt  int    `json:"firstInt" binding:"required"`
-	SecondInt int    `json:"secondInt" binding:"required"`
-	Limit     int    `json:"limit" binding:"required"`
-	FirstStr  string `json:"firstStr" binding:"required"`
-	SecondStr string `json:"secondStr" binding:"required"`
+	FirstInt  int    `json:"firstInt"`
+	SecondInt int    `json:"secondInt"`
+	Limit     int    `json:"limit"`
+	FirstStr  string `json:"firstStr"`
+	SecondStr string `json:"secondStr"`
 }
 
 type defaultStringListBuilder struct{}

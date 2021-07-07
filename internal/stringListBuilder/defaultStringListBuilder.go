@@ -17,6 +17,7 @@ func (builder *defaultStringListBuilder) BuildStringList(buildInput *StringListB
 		currentNumber := i + 1
 		firstIntModulo := currentNumber % buildInput.FirstInt
 		secondIntModulo := currentNumber % buildInput.SecondInt
+
 		switch {
 		case firstIntModulo == 0 && secondIntModulo == 0:
 			stringList[i] = twoInputStringsJoined
