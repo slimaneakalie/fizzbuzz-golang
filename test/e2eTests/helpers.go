@@ -38,7 +38,7 @@ func testMultipleE2ERequests(testInput *multipleRequestsTestInput) {
 	Expect(loadingErr).To(BeNil())
 
 	for _, testingElement := range testData {
-		httpTestingEngine := service.New().HttpEngine
+		httpTestingEngine := service.NewServer().HttpEngine
 		responseRecorder, httpErr := performPOSTJSONRequest(httpTestingEngine, "/v1/fizzbuzz", &testingElement.Request)
 
 		Expect(httpErr).To(BeNil())

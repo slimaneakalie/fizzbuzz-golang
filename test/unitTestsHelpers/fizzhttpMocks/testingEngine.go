@@ -45,3 +45,11 @@ func (engine *TestingEngine) Run(port int) error {
 func (engine *TestingEngine) ServeHTTP(respWriter http.ResponseWriter, request *http.Request) {
 	engine.RecordFuncCall("ServeHTTP", respWriter, request)
 }
+
+func (engine *TestingEngine) POST(relativePath string, handler fizzhttp.HandlerFunc) {
+	engine.RecordFuncCall("POST", relativePath, handler)
+}
+
+func (engine *TestingEngine) GET(relativePath string, handler fizzhttp.HandlerFunc) {
+	engine.RecordFuncCall("GET", relativePath, handler)
+}

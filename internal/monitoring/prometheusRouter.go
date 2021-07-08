@@ -5,7 +5,7 @@ import (
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
 )
 
-func NewPrometheusHandler() Router {
+func NewPrometheusHandler() Handler {
 	return &PrometheusHandler{
 		promHttpHandler: promhttp.Handler(),
 	}

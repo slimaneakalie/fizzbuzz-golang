@@ -1,9 +1,8 @@
 package api
 
 import (
-	"github.com/slimaneakalie/fizzbuzz-golang/internal/logger"
-
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/fizzhttp"
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/logger"
 
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/stringListBuilder"
 )

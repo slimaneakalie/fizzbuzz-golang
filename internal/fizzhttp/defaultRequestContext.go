@@ -33,3 +33,8 @@ func (context *defaultRequestContext) GetResponseWriter() http.ResponseWriter {
 func (context *defaultRequestContext) GetRequest() *http.Request {
 	return context.internalContext.Request
 }
+
+func handleGinRequest(handler HandlerFunc, context *gin.Context) {
+	requestContext := NewDefaultContext(context)
+	handler(requestContext)
+}

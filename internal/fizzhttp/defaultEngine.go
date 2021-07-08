@@ -59,3 +59,15 @@ func (engine *defaultEngine) FormatBindingError(bindingError error) error {
 func (engine *defaultEngine) ServeHTTP(respWriter http.ResponseWriter, request *http.Request) {
 	engine.internalEngine.ServeHTTP(respWriter, request)
 }
+
+func (engine *defaultEngine) POST(relativePath string, handler HandlerFunc) {
+	engine.internalEngine.POST(relativePath, func(context *gin.Context) {
+		handleGinRequest(handler, context)
+	})
+}
+
+func (engine *defaultEngine) GET(relativePath string, handler HandlerFunc) {
+	engine.internalEngine.GET(relativePath, func(context *gin.Context) {
+		handleGinRequest(handler, context)
+	})
+}
