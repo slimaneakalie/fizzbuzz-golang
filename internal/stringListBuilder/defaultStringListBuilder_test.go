@@ -16,10 +16,20 @@ var _ = Describe("stringListBuilderTooling package - defaultStringListBuilder.go
 			defaultBuilder := NewDefaultBuilder()
 			for _, testElement := range testingData {
 				actual := defaultBuilder.BuildStringList(testElement.BuildInput)
-				expected := common.ToStringSlice(testElement.ExpectedOutput.([]interface{}))
+				expected := toStringSlice(testElement.ExpectedOutput)
 				Expect(actual).To(Equal(expected))
 			}
 		})
 
 	})
 })
+
+func toStringSlice(input interface{}) interface{} {
+	var outputSlice []string
+	inputSlice := input.([]interface{})
+	for _, inputElement := range inputSlice {
+		outputSlice = append(outputSlice, inputElement.(string))
+	}
+
+	return outputSlice
+}

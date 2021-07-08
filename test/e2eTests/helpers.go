@@ -6,10 +6,13 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/slimaneakalie/fizzbuzz-golang/internal/api"
+	. "github.com/onsi/gomega"
+
+	"github.com/slimaneakalie/fizzbuzz-golang/internal/service"
+	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/common"
 )
 
-func performPOSTJSONRequest(handler http.Handler, route string, queryObject *api.FizzbuzzAPIRequest) (*httptest.ResponseRecorder, error) {
+func performPOSTJSONRequest(handler http.Handler, route string, queryObject interface{}) (*httptest.ResponseRecorder, error) {
 	var req *http.Request
 
 	unmarshalledObject, err := json.Marshal(queryObject)
@@ -27,4 +30,26 @@ func performPOSTJSONRequest(handler http.Handler, route string, queryObject *api
 	responseRecorder := httptest.NewRecorder()
 	handler.ServeHTTP(responseRecorder, req)
 	return responseRecorder, nil
+}
+
+func testMultipleE2ERequests(testInput *multipleRequestsTestInput) {
+	var testData []testingData
+	loadingErr := common.LoadTestingJsonData(testInput.testJsonDataPath, &testData)
+	Expect(loadingErr).To(BeNil())
+
+	for _, testingElement := range testData {
+		httpTestingEngine := service.New().HttpEngine
+		responseRecorder, httpErr := performPOSTJSONRequest(httpTestingEngine, "/v1/fizzbuzz", &testingElement.Request)
+
+		Expect(httpErr).To(BeNil())
+
+		Expect(responseRecorder.Code).To(Equal(testInput.expectedHttpResponseStatus))
+
+		var actual interface{}
+
+		umarshallingErr := json.Unmarshal(responseRecorder.Body.Bytes(), &actual)
+		Expect(umarshallingErr).To(BeNil())
+
+		Expect(actual).To(Equal(testingElement.ExpectedResponse))
+	}
 }

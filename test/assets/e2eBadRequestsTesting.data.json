@@ -1,19 +1,185 @@
 [
   {
-    "buildInput": {
-      "firstInt": 3,
+    "request": {
+      "firstInt": "hello",
       "secondInt": 5,
       "limit": 100,
-      "firstStr": 2,
+      "firstStr": "fizz",
       "secondStr": "buzz"
     },
-    "expectedOutput": {
+    "expectedResponse": {
       "type": "BadRequest",
       "fieldErrors": [
         {
-          "type": "ParamTypeMismatch",
+          "field": "firstInt",
+          "detail": "expected type int instead of string",
+          "type": "ParamTypeMismatch"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "firstInt": 3,
+      "secondInt": "it's",
+      "limit": 100,
+      "firstStr": "fizz",
+      "secondStr": "buzz"
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "field": "secondInt",
+          "detail": "expected type int instead of string",
+          "type": "ParamTypeMismatch"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "firstInt": 3,
+      "secondInt": 5,
+      "limit": "me",
+      "firstStr": "fizz",
+      "secondStr": "buzz"
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "field": "limit",
+          "detail": "expected type int instead of string",
+          "type": "ParamTypeMismatch"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "firstInt": 3,
+      "secondInt": 5,
+      "limit": 100,
+      "firstStr": 10,
+      "secondStr": "buzz"
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
           "field": "firstStr",
-          "detail": "expected type string instead of number"
+          "detail": "expected type string instead of number",
+          "type": "ParamTypeMismatch"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "firstInt": 3,
+      "secondInt": 5,
+      "limit": 100,
+      "firstStr": "fizz",
+      "secondStr": 10
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "field": "secondStr",
+          "detail": "expected type string instead of number",
+          "type": "ParamTypeMismatch"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "secondInt": 5,
+      "limit": 100,
+      "firstStr": "fizz",
+      "secondStr": "buzz"
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "type": "InvalidParamValue",
+          "field": "FirstInt",
+          "detail": "FirstInt is required"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "firstInt": 5,
+      "limit": 100,
+      "firstStr": "fizz",
+      "secondStr": "buzz"
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "type": "InvalidParamValue",
+          "field": "SecondInt",
+          "detail": "SecondInt is required"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "firstInt": 5,
+      "secondInt": 5,
+      "firstStr": "fizz",
+      "secondStr": "buzz"
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "type": "InvalidParamValue",
+          "field": "Limit",
+          "detail": "Limit is required"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "firstInt": 5,
+      "secondInt": 5,
+      "Limit": 100,
+      "secondStr": "buzz"
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "type": "InvalidParamValue",
+          "field": "FirstStr",
+          "detail": "FirstStr is required"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "firstInt": 5,
+      "secondInt": 5,
+      "Limit": 100,
+      "firstStr": "buzz"
+    },
+    "expectedResponse": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "type": "InvalidParamValue",
+          "field": "SecondStr",
+          "detail": "SecondStr is required"
         }
       ]
     }
