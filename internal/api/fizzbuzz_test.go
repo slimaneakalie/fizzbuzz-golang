@@ -23,10 +23,10 @@ var _ = Describe("Api package - fizzbuzz.go", func() {
 				FizzbuzzStringList: finalStringList,
 			}
 			expectedJSONFuncCallParams := []interface{}{http.StatusOK, expectedApiResponse}
-			Expect(testTooling.TestingRequestContext.GetFuncFirstCallParamsInOrder("JSON")).To(Equal(expectedJSONFuncCallParams))
-			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("JSON")).To(Equal(1))
+			Expect(testTooling.TestingRequestContext.GetFuncFirstCallParamsInOrder("SendJSONResponse")).To(Equal(expectedJSONFuncCallParams))
+			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("SendJSONResponse")).To(Equal(1))
 			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("AbortWithStatusJSON")).To(Equal(0))
-			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("ShouldBindBodyWith")).To(Equal(1))
+			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("ShouldBindBodyWithJSON")).To(Equal(1))
 
 			var userRequest FizzbuzzAPIRequest
 			expectedBuildStringListCallParams := []interface{}{toFizzbuzzListBuildInput(&userRequest)}
@@ -43,8 +43,8 @@ var _ = Describe("Api package - fizzbuzz.go", func() {
 			expectedAbortFuncCallParams := []interface{}{http.StatusBadRequest, formatBindingErrorOutput}
 			Expect(testTooling.TestingRequestContext.GetFuncFirstCallParamsInOrder("AbortWithStatusJSON")).To(Equal(expectedAbortFuncCallParams))
 			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("AbortWithStatusJSON")).To(Equal(1))
-			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("JSON")).To(Equal(0))
-			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("ShouldBindBodyWith")).To(Equal(1))
+			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("SendJSONResponse")).To(Equal(0))
+			Expect(testTooling.TestingRequestContext.GetNumberOfFuncCalls("ShouldBindBodyWithJSON")).To(Equal(1))
 
 			expectedFormatBindingErrorCallParams := []interface{}{shouldBindBodyWithOutput}
 			Expect(testTooling.TestingEngine.GetFuncFirstCallParamsInOrder("FormatBindingError")).To(Equal(expectedFormatBindingErrorCallParams))

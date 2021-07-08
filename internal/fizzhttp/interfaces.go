@@ -19,9 +19,11 @@ type RouterGroup interface {
 }
 
 type RequestContext interface {
-	ShouldBindBodyWith(targetObjectPointer interface{}, requestBody bindingBodyType) (err error)
+	ShouldBindBodyWithJSON(targetObjectPointer interface{}) (err error)
 	AbortWithStatusJSON(statusCode int, responseObject interface{})
-	JSON(code int, obj interface{})
+	SendJSONResponse(code int, obj interface{})
+	GetResponseWriter() http.ResponseWriter
+	GetRequest() *http.Request
 }
 
 type fieldValidationError interface {

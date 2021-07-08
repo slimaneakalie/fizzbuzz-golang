@@ -21,7 +21,7 @@ func (handler *defaultFizzbuzzRequestAPIHandler) handleFizzbuzzRequest() fizzhtt
 
 func (handler *defaultFizzbuzzRequestAPIHandler) fizzbuzzRequestHandler(context fizzhttp.RequestContext) {
 	var userRequest FizzbuzzAPIRequest
-	if err := context.ShouldBindBodyWith(&userRequest, fizzhttp.JsonBinding); err != nil {
+	if err := context.ShouldBindBodyWithJSON(&userRequest); err != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, handler.bindingErrorFormatter(err))
 		return
 	}
@@ -33,7 +33,7 @@ func (handler *defaultFizzbuzzRequestAPIHandler) fizzbuzzRequestHandler(context 
 		FizzbuzzStringList: fizzbuzzStringList,
 	}
 
-	context.JSON(http.StatusOK, apiResponse)
+	context.SendJSONResponse(http.StatusOK, apiResponse)
 }
 
 func toFizzbuzzListBuildInput(request *FizzbuzzAPIRequest) *stringListBuilder.BuildInput {

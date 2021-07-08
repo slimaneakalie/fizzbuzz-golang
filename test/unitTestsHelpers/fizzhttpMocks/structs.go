@@ -22,5 +22,5 @@ type TestingRouterGroup struct {
 
 type TestingRequestContext struct {
 	common.MockElement
-	shouldBindBodyWithOutput error
+	shouldBindBodyWithJSONOutput error
 }
