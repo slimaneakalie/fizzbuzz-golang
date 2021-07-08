@@ -5,10 +5,10 @@ import (
 	"reflect"
 )
 
-func NewRequestUnmarshalErrorType(targetedFieldName, jsonTypeDescription string, requestWrongInput interface{}) *json.UnmarshalTypeError {
+func NewRequestUnmarshalErrorType(targetedFieldName, requestWrongInputType string, expectedInputSample interface{}) *json.UnmarshalTypeError {
 	return &json.UnmarshalTypeError{
 		Field: targetedFieldName,
-		Value: jsonTypeDescription,
-		Type:  reflect.TypeOf(requestWrongInput),
+		Value: requestWrongInputType,
+		Type:  reflect.TypeOf(expectedInputSample),
 	}
 }

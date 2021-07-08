@@ -1,7 +1,7 @@
 package fizzhttp
 
-func NewHttpErrorResponseMetadata(errorType string, fieldErrors []*responseFieldError) *httpErrorResponseMetadata {
-	return &httpErrorResponseMetadata{
+func NewHttpErrorResponse(errorType string, fieldErrors []*responseFieldError) *httpErrorResponse {
+	return &httpErrorResponse{
 		Type:        errorType,
 		FieldErrors: fieldErrors,
 	}

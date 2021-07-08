@@ -13,7 +13,7 @@ var _ = Describe("fizzhttp package - errors.go", func() {
 			unmarshalErrorExample := fizzhttpTestTooling.NewRequestUnmarshalErrorType("fieldName", "string", 123)
 			sampleErrorDetail := generateUnmarshalErrorResponseMessage(unmarshalErrorExample)
 			sampleFieldsErrorr := []*responseFieldError{NewFieldError(ParamTypeMismatchErrorCode, unmarshalErrorExample.Field, sampleErrorDetail)}
-			expected := NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, sampleFieldsErrorr)
+			expected := NewHttpErrorResponse(BadRequestResponseTypeCode, sampleFieldsErrorr)
 
 			actual := createUnmarshalErrorServerResponse(unmarshalErrorExample)
 
@@ -23,7 +23,7 @@ var _ = Describe("fizzhttp package - errors.go", func() {
 
 	Context("generateUnmarshalErrorResponseMessage function", func() {
 		It("should return the correct message based on the unmarshalling error", func() {
-			expected := "expected type string instead of int"
+			expected := "expected type int instead of string"
 			unmarshalErrorExample := fizzhttpTestTooling.NewRequestUnmarshalErrorType("fieldName", "string", 123)
 			actual := generateUnmarshalErrorResponseMessage(unmarshalErrorExample)
 			Expect(actual).To(Equal(expected))
@@ -43,7 +43,7 @@ var _ = Describe("fizzhttp package - errors.go", func() {
 				NewFieldError(InvalidParamValueErrorCode, fieldErrorsSample[1].Field(), generateFieldErrorResponseMessage(fieldErrorsSample[1])),
 				NewFieldError(InvalidParamValueErrorCode, fieldErrorsSample[2].Field(), generateFieldErrorResponseMessage(fieldErrorsSample[2])),
 			}
-			expectedErrorServerResponse := NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, expectedResponseErrors)
+			expectedErrorServerResponse := NewHttpErrorResponse(BadRequestResponseTypeCode, expectedResponseErrors)
 
 			actualErrorServerResponse := createValidationErrorServerResponse(fieldErrorsSample)
 			Expect(actualErrorServerResponse).To(Equal(expectedErrorServerResponse))

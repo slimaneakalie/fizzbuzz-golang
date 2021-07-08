@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"net/http"
 
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/stringListBuilder"
 
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/service"
 
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/api"
 )
 
@@ -30,7 +31,7 @@ var _ = Describe("End to End tests - fizzbuzz success", func() {
 			}
 
 			httpTestingEngine := service.New().HttpEngine
-			responseRecorder, httpErr := performPOSTJSONRequest(httpTestingEngine, "/v1/fizzbuzz", query)
+			responseRecorder, httpErr := performPOSTJSONRequest(httpTestingEngine, "/v1/fizzbuzz", &query)
 
 			Expect(httpErr).To(BeNil())
 

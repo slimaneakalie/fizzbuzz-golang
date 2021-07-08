@@ -11,7 +11,7 @@ var _ = Describe("stringListBuilderTooling package - defaultStringListBuilder.go
 			testingData, err := LoadTestingData("../../test/assets/defaultStringListBuilderTesting.data.json")
 			Expect(err).To(BeNil())
 
-			defaultBuilder := NewDefaultStringListBuilder()
+			defaultBuilder := NewDefaultBuilder()
 			for _, testElement := range testingData {
 				actual := defaultBuilder.BuildStringList(testElement.BuildInput)
 				// defaultBuilder.BuildStringList(testElement.BuildInput)

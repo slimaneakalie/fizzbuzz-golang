@@ -9,7 +9,7 @@ import (
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/api"
 )
 
-func performPOSTJSONRequest(handler http.Handler, route string, queryObject api.FizzbuzzAPIRequest) (*httptest.ResponseRecorder, error) {
+func performPOSTJSONRequest(handler http.Handler, route string, queryObject *api.FizzbuzzAPIRequest) (*httptest.ResponseRecorder, error) {
 	var req *http.Request
 
 	unmarshalledObject, err := json.Marshal(queryObject)

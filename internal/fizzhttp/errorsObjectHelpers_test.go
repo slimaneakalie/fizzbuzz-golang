@@ -6,18 +6,18 @@ import (
 )
 
 var _ = Describe("fizzhttp package - errorObjectHelpers.go", func() {
-	Context("NewHttpErrorResponseMetadata function", func() {
-		It("should map params to a valid httpErrorResponseMetadata object", func() {
+	Context("NewHttpErrorResponse function", func() {
+		It("should map params to a valid httpErrorResponse object", func() {
 			sampleFieldsError := []*responseFieldError{
 				NewFieldError(ParamTypeMismatchErrorCode, "fieldName", "error detail"),
 			}
 			sampleErrorType := BadRequestResponseTypeCode
 
-			expected := &httpErrorResponseMetadata{
+			expected := &httpErrorResponse{
 				Type:        sampleErrorType,
 				FieldErrors: sampleFieldsError,
 			}
-			actual := NewHttpErrorResponseMetadata(sampleErrorType, sampleFieldsError)
+			actual := NewHttpErrorResponse(sampleErrorType, sampleFieldsError)
 
 			Expect(actual).To(Equal(expected))
 		})

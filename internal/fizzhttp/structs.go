@@ -12,7 +12,7 @@ type defaultRouterGroup struct {
 	internalRouterGroup *gin.RouterGroup
 }
 
-type httpErrorResponseMetadata struct {
+type httpErrorResponse struct {
 	Type        string                `json:"type"`
 	FieldErrors []*responseFieldError `json:"fieldErrors,omitempty"`
 }

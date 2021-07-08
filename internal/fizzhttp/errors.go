@@ -1,6 +1,7 @@
 package fizzhttp
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 )
@@ -11,19 +12,19 @@ const (
 	ParamTypeMismatchErrorCode = "ParamTypeMismatch"
 )
 
-func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) *httpErrorResponseMetadata {
+func createUnmarshalErrorServerResponse(unmarshalError requestUnmarshalErrorType) *httpErrorResponse {
 	errorDetail := generateUnmarshalErrorResponseMessage(unmarshalError)
 	currentFieldError := NewFieldError(ParamTypeMismatchErrorCode, unmarshalError.Field, errorDetail)
 	responseFieldErrors := []*responseFieldError{currentFieldError}
 
-	return NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, responseFieldErrors)
+	return NewHttpErrorResponse(BadRequestResponseTypeCode, responseFieldErrors)
 }
 
 func generateUnmarshalErrorResponseMessage(unmarshalError requestUnmarshalErrorType) string {
-	return fmt.Sprintf("expected type %s instead of %s", unmarshalError.Value, unmarshalError.Type.String())
+	return fmt.Sprintf("expected type %s instead of %s", unmarshalError.Type.String(), unmarshalError.Value)
 }
 
-func createValidationErrorServerResponse(validationErrors validationErrorsType) *httpErrorResponseMetadata {
+func createValidationErrorServerResponse(validationErrors validationErrorsType) *httpErrorResponse {
 	var responseFieldErrors []*responseFieldError
 	for _, validationError := range validationErrors {
 		currentFieldErrorDetail := generateFieldErrorResponseMessage(validationError)
@@ -31,7 +32,7 @@ func createValidationErrorServerResponse(validationErrors validationErrorsType) 
 		responseFieldErrors = append(responseFieldErrors, currentFieldError)
 	}
 
-	return NewHttpErrorResponseMetadata(BadRequestResponseTypeCode, responseFieldErrors)
+	return NewHttpErrorResponse(BadRequestResponseTypeCode, responseFieldErrors)
 }
 
 func generateFieldErrorResponseMessage(fve fieldValidationError) string {
@@ -52,4 +53,9 @@ func (validationErrors validationErrorsType) Error() string {
 	}
 
 	return strings.Join(errorMessages, ",\n")
+}
+
+func (err *httpErrorResponse) Error() string {
+	jsonBytes, _ := json.Marshal(err)
+	return string(jsonBytes)
 }

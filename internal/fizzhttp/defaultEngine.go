@@ -1,8 +1,11 @@
 package fizzhttp
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/go-playground/validator/v10"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,25 +32,28 @@ func (engine *defaultEngine) Run(port int) error {
 }
 
 func (engine *defaultEngine) FormatBindingError(bindingError error) error {
-	formattedError := &gin.Error{
-		Err:  bindingError,
-		Type: gin.ErrorTypePublic,
-	}
 
 	switch bindingError.(type) {
-	case requestUnmarshalErrorType:
-		formattedError.Meta = createUnmarshalErrorServerResponse(bindingError.(requestUnmarshalErrorType))
+	case *json.UnmarshalTypeError:
+		return createUnmarshalErrorServerResponse(bindingError.(*json.UnmarshalTypeError))
 
 	case validationErrorsType:
-		formattedError.Meta = createValidationErrorServerResponse(bindingError.(validationErrorsType))
+		fieldValidationErrors := bindingError.(validationErrorsType)
+		return createValidationErrorServerResponse(fieldValidationErrors)
+
+	case validator.ValidationErrors:
+		validatorErrors := bindingError.(validator.ValidationErrors)
+		var fieldValidationErrors validationErrorsType
+		for _, ve := range validatorErrors {
+			fieldValidationErrors = append(fieldValidationErrors, ve)
+		}
+
+		return createValidationErrorServerResponse(fieldValidationErrors)
 
 	default:
-		formattedError.Meta = httpErrorResponseMetadata{
-			Type: BadRequestResponseTypeCode,
-		}
+		return NewHttpErrorResponse(BadRequestResponseTypeCode, nil)
 	}
 
-	return formattedError
 }
 
 func (engine *defaultEngine) ServeHTTP(respWriter http.ResponseWriter, request *http.Request) {

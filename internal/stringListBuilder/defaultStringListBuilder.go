@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func NewDefaultStringListBuilder() StringListBuilder {
+func NewDefaultBuilder() StringListBuilder {
 	return &defaultStringListBuilder{}
 }
 

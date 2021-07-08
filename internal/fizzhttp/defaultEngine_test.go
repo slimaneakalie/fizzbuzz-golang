@@ -7,8 +7,6 @@ import (
 
 	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/testTooling/fizzhttpTestTooling"
 
-	"github.com/gin-gonic/gin"
-
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -22,11 +20,7 @@ var _ = Describe("fizzhttp package - defaultEngine.go", func() {
 				Type:  reflect.TypeOf("a"),
 			}
 
-			expectedFormattedError := &gin.Error{
-				Err:  unmarshalErrorExample,
-				Type: gin.ErrorTypePublic,
-				Meta: createUnmarshalErrorServerResponse(unmarshalErrorExample),
-			}
+			expectedFormattedError := createUnmarshalErrorServerResponse(unmarshalErrorExample)
 
 			testBindingBindingErrorFormatting(unmarshalErrorExample, expectedFormattedError)
 		})
@@ -36,24 +30,14 @@ var _ = Describe("fizzhttp package - defaultEngine.go", func() {
 				fizzhttpTestTooling.NewTestingFieldValidationError("required", "field1"),
 			}
 
-			expectedFormattedError := &gin.Error{
-				Err:  validationErrorsExample,
-				Type: gin.ErrorTypePublic,
-				Meta: createValidationErrorServerResponse(validationErrorsExample),
-			}
+			expectedFormattedError := createValidationErrorServerResponse(validationErrorsExample)
 
 			testBindingBindingErrorFormatting(validationErrorsExample, expectedFormattedError)
 		})
 
 		It("should return the default format when provided with a generic error", func() {
 			genericBindingErrorExample := errors.New("http error example")
-			expectedFormattedError := &gin.Error{
-				Err:  genericBindingErrorExample,
-				Type: gin.ErrorTypePublic,
-				Meta: httpErrorResponseMetadata{
-					Type: BadRequestResponseTypeCode,
-				},
-			}
+			expectedFormattedError := NewHttpErrorResponse(BadRequestResponseTypeCode, nil)
 
 			testBindingBindingErrorFormatting(genericBindingErrorExample, expectedFormattedError)
 		})
