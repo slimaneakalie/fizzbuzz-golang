@@ -9,3 +9,8 @@ type BuildInput struct {
 }
 
 type defaultStringListBuilder struct{}
+
+type StringListTestingDataElement struct {
+	BuildInput     *BuildInput `json:"buildInput"`
+	ExpectedOutput interface{} `json:"expectedOutput"`
+}

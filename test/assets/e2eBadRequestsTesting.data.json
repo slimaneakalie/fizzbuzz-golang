@@ -1,0 +1,21 @@
+[
+  {
+    "buildInput": {
+      "firstInt": 3,
+      "secondInt": 5,
+      "limit": 100,
+      "firstStr": 2,
+      "secondStr": "buzz"
+    },
+    "expectedOutput": {
+      "type": "BadRequest",
+      "fieldErrors": [
+        {
+          "type": "ParamTypeMismatch",
+          "field": "firstStr",
+          "detail": "expected type string instead of number"
+        }
+      ]
+    }
+  }
+]

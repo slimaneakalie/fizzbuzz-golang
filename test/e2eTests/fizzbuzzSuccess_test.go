@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/common"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
@@ -16,7 +18,8 @@ import (
 
 var _ = Describe("End to End tests - fizzbuzz success", func() {
 	It("should send a valid string list when provided with a valid query", func() {
-		testingData, loadingErr := stringListBuilder.LoadTestingData("../assets/defaultStringListBuilderTesting.data.json")
+		var testingData []stringListBuilder.StringListTestingDataElement
+		loadingErr := common.LoadTestingJsonData("../assets/defaultStringListBuilderTesting.data.json", &testingData)
 		Expect(loadingErr).To(BeNil())
 		expectedStatus := http.StatusOK
 
@@ -41,7 +44,8 @@ var _ = Describe("End to End tests - fizzbuzz success", func() {
 
 			umarshallingErr := json.Unmarshal(responseRecorder.Body.Bytes(), &actualResponse)
 			Expect(umarshallingErr).To(BeNil())
-			Expect(actualResponse.FizzbuzzStringList).To(Equal(testingElement.ExpectedOutput))
+			expected := common.ToStringSlice(testingElement.ExpectedOutput.([]interface{}))
+			Expect(actualResponse.FizzbuzzStringList).To(Equal(expected))
 		}
 
 	})
