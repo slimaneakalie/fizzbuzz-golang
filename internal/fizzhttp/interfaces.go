@@ -25,6 +25,9 @@ type RequestContext interface {
 	SendJSONResponse(code int, obj interface{})
 	GetResponseWriter() http.ResponseWriter
 	GetRequest() *http.Request
+	GetResponseStatus() int
+	GetJsonStringQuery() string
+	Next()
 }
 
 type fieldValidationError interface {

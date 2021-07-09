@@ -32,3 +32,15 @@ func (requestContext *TestingRequestContext) GetRequest() *http.Request {
 	requestContext.RecordFuncCall("GetRequest")
 	return nil
 }
+
+func (requestContext *TestingRequestContext) GetResponseStatus() int {
+	requestContext.RecordFuncCall("GetResponseStatus")
+	return 0
+}
+func (requestContext *TestingRequestContext) GetJsonStringQuery() string {
+	requestContext.RecordFuncCall("GetJsonStringQuery")
+	return ""
+}
+func (requestContext *TestingRequestContext) Next() {
+	requestContext.RecordFuncCall("Next")
+}

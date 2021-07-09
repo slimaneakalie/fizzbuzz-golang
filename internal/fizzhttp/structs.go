@@ -14,6 +14,7 @@ type defaultRouterGroup struct {
 
 type defaultRequestContext struct {
 	internalContext *gin.Context
+	jsonStrResponse string
 }
 
 type httpErrorResponse struct {

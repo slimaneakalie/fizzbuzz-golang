@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 
+	"github.com/slimaneakalie/fizzbuzz-golang/test/unitTestsHelpers/monitoringMocks"
+
 	. "github.com/onsi/gomega"
 
 	"github.com/slimaneakalie/fizzbuzz-golang/internal/service"
@@ -37,8 +39,10 @@ func testMultipleE2ERequests(testInput *multipleRequestsTestInput) {
 	loadingErr := common.LoadTestingJsonData(testInput.testJsonDataPath, &testData)
 	Expect(loadingErr).To(BeNil())
 
+	testingMonitoringHandler := monitoringMocks.NewTestingHandler()
+	httpTestingEngine := service.NewServer(testingMonitoringHandler).HttpEngine
+
 	for _, testingElement := range testData {
-		httpTestingEngine := service.NewServer().HttpEngine
 		responseRecorder, httpErr := performPOSTJSONRequest(httpTestingEngine, "/v1/fizzbuzz", &testingElement.Request)
 
 		Expect(httpErr).To(BeNil())

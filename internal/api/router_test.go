@@ -14,9 +14,11 @@ var _ = Describe("Api package - Router.go", func() {
 		It("should create a new Router while using the injected httpEngineFactory and stringListBuilderTooling", func() {
 			testTooling := apiTestTooling.PrepareRouterTestsTooling(nil)
 
-			router := NewRouter(testTooling.TestingEngineFactory, testTooling.TestingStringListBuilder, testTooling.TestingLogger)
+			router := NewRouter(testTooling.TestingEngineFactory, testTooling.TestingStringListBuilder, testTooling.TestingMonitoringHandler, testTooling.TestingLogger)
 
 			Expect(testTooling.TestingEngineFactory.GetNumberOfFuncCalls("NewEngine")).To(Equal(1))
+			Expect(testTooling.TestingEngine.GetNumberOfFuncCalls("GET")).To(Equal(1))
+			Expect(testTooling.TestingMonitoringHandler.GetNumberOfFuncCalls("HandleMonitoringQuery")).To(Equal(1))
 
 			expectedGroupFuncCallParam := []interface{}{"/v1/fizzbuzz"}
 			Expect(testTooling.TestingEngine.GetFuncFirstCallParamsInOrder("Group")).To(Equal(expectedGroupFuncCallParam))
@@ -49,7 +51,7 @@ var _ = Describe("Api package - Router.go", func() {
 })
 
 func testRunRouterCommonExecutionPath(testTooling *apiTestTooling.Router) {
-	router := NewRouter(testTooling.TestingEngineFactory, testTooling.TestingStringListBuilder, testTooling.TestingLogger)
+	router := NewRouter(testTooling.TestingEngineFactory, testTooling.TestingStringListBuilder, testTooling.TestingMonitoringHandler, testTooling.TestingLogger)
 	port := 9000
 	router.Run(port)
 	expectedInfoFuncCallParams := []interface{}{"Running server on port", port}

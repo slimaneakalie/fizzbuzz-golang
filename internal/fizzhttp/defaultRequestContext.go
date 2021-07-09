@@ -1,6 +1,7 @@
 package fizzhttp
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin/binding"
@@ -14,8 +15,15 @@ func NewDefaultContext(ginContext *gin.Context) *defaultRequestContext {
 	}
 }
 
-func (context *defaultRequestContext) ShouldBindBodyWithJSON(targetObjectPointer interface{}) (err error) {
-	return context.internalContext.ShouldBindBodyWith(targetObjectPointer, binding.JSON)
+func (context *defaultRequestContext) ShouldBindBodyWithJSON(targetObjectPointer interface{}) error {
+	bindingErr := context.internalContext.ShouldBindBodyWith(targetObjectPointer, binding.JSON)
+
+	if bindingErr == nil {
+		jsonBytes, _ := json.Marshal(targetObjectPointer)
+		context.jsonStrResponse = string(jsonBytes)
+	}
+
+	return bindingErr
 }
 
 func (context *defaultRequestContext) AbortWithStatusJSON(statusCode int, responseObject interface{}) {
@@ -32,6 +40,18 @@ func (context *defaultRequestContext) GetResponseWriter() http.ResponseWriter {
 
 func (context *defaultRequestContext) GetRequest() *http.Request {
 	return context.internalContext.Request
+}
+
+func (context *defaultRequestContext) GetResponseStatus() int {
+	return context.internalContext.Writer.Status()
+}
+
+func (context *defaultRequestContext) GetJsonStringQuery() string {
+	return context.jsonStrResponse
+}
+
+func (context *defaultRequestContext) Next() {
+	context.internalContext.Next()
 }
 
 func handleGinRequest(handler HandlerFunc, context *gin.Context) {
