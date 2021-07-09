@@ -53,3 +53,7 @@ func (engine *TestingEngine) POST(relativePath string, handler fizzhttp.HandlerF
 func (engine *TestingEngine) GET(relativePath string, handler fizzhttp.HandlerFunc) {
 	engine.RecordFuncCall("GET", relativePath, handler)
 }
+
+func (engine *TestingEngine) UseMiddleware(handlerFunc fizzhttp.HandlerFunc) {
+	engine.RecordFuncCall("UseMiddleware", handlerFunc)
+}

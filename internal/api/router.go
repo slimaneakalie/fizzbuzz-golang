@@ -13,6 +13,7 @@ func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder strin
 
 	httpEngine := httpEngineFactory.NewEngine()
 	httpEngine.GET("/metrics", monitoringHandler.HandleMonitoringQuery())
+	httpEngine.UseMiddleware(monitoringHandler.MonitoringMiddleWare())
 
 	fizzbuzzRequestAPIHandler := NewDefaultFizzbuzzRequestAPIHandler(stringListBuilder, httpEngine.FormatBindingError)
 	group := httpEngine.Group("/v1/fizzbuzz")

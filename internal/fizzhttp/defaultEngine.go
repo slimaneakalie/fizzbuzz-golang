@@ -71,3 +71,9 @@ func (engine *defaultEngine) GET(relativePath string, handler HandlerFunc) {
 		handleGinRequest(handler, context)
 	})
 }
+
+func (engine *defaultEngine) UseMiddleware(middleware HandlerFunc) {
+	engine.internalEngine.Use(func(context *gin.Context) {
+		handleGinRequest(middleware, context)
+	})
+}

@@ -16,14 +16,7 @@ func NewDefaultContext(ginContext *gin.Context) *defaultRequestContext {
 }
 
 func (context *defaultRequestContext) ShouldBindBodyWithJSON(targetObjectPointer interface{}) error {
-	bindingErr := context.internalContext.ShouldBindBodyWith(targetObjectPointer, binding.JSON)
-
-	if bindingErr == nil {
-		jsonBytes, _ := json.Marshal(targetObjectPointer)
-		context.jsonStrResponse = string(jsonBytes)
-	}
-
-	return bindingErr
+	return context.internalContext.ShouldBindBodyWith(targetObjectPointer, binding.JSON)
 }
 
 func (context *defaultRequestContext) AbortWithStatusJSON(statusCode int, responseObject interface{}) {
@@ -47,7 +40,10 @@ func (context *defaultRequestContext) GetResponseStatus() int {
 }
 
 func (context *defaultRequestContext) GetJsonStringQuery() string {
-	return context.jsonStrResponse
+	var requestBody interface{}
+	context.internalContext.ShouldBindBodyWith(&requestBody, binding.JSON)
+	jsonBytes, _ := json.Marshal(requestBody)
+	return string(jsonBytes)
 }
 
 func (context *defaultRequestContext) Next() {

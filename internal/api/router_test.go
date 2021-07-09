@@ -18,6 +18,7 @@ var _ = Describe("Api package - Router.go", func() {
 
 			Expect(testTooling.TestingEngineFactory.GetNumberOfFuncCalls("NewEngine")).To(Equal(1))
 			Expect(testTooling.TestingEngine.GetNumberOfFuncCalls("GET")).To(Equal(1))
+			Expect(testTooling.TestingEngine.GetNumberOfFuncCalls("UseMiddleware")).To(Equal(1))
 			Expect(testTooling.TestingMonitoringHandler.GetNumberOfFuncCalls("HandleMonitoringQuery")).To(Equal(1))
 
 			expectedGroupFuncCallParam := []interface{}{"/v1/fizzbuzz"}

@@ -12,6 +12,7 @@ type Engine interface {
 	FormatBindingError(bindError error) error
 	Run(port int) error
 	ServeHTTP(http.ResponseWriter, *http.Request)
+	UseMiddleware(handlerFunc HandlerFunc)
 }
 
 type RouterGroup interface {
