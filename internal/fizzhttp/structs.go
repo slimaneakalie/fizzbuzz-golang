@@ -9,7 +9,7 @@ type defaultEngine struct {
 }
 
 type defaultRouterGroup struct {
-	internalRouterGroup *gin.RouterGroup
+	internalRouterGroup gin.IRoutes
 }
 
 type defaultRequestContext struct {

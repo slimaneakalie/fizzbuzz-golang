@@ -15,9 +15,12 @@ func NewRouter(httpEngineFactory fizzhttp.EngineFactory, stringListBuilder strin
 	httpEngine.GET("/metrics", monitoringHandler.HandleMonitoringQuery())
 	httpEngine.UseMiddleware(monitoringHandler.MonitoringMiddleWare())
 
-	fizzbuzzRequestAPIHandler := NewDefaultFizzbuzzRequestAPIHandler(stringListBuilder, httpEngine.FormatBindingError)
 	group := httpEngine.Group("/v1/fizzbuzz")
+	fizzbuzzRequestAPIHandler := NewDefaultFizzbuzzRequestAPIHandler(stringListBuilder, httpEngine.FormatBindingError)
 	group.POST("", fizzbuzzRequestAPIHandler.handleFizzbuzzRequest())
+
+	statsRequestHandler := NewDefaultStatsHandler(monitoringHandler)
+	group.GET("/stats", statsRequestHandler.handleStatsRequest())
 
 	return &Router{
 		HttpEngine: httpEngine,

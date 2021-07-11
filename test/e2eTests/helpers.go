@@ -51,8 +51,8 @@ func testMultipleE2ERequests(testInput *multipleRequestsTestInput) {
 
 		var actual interface{}
 
-		umarshallingErr := json.Unmarshal(responseRecorder.Body.Bytes(), &actual)
-		Expect(umarshallingErr).To(BeNil())
+		unmarshallingErr := json.Unmarshal(responseRecorder.Body.Bytes(), &actual)
+		Expect(unmarshallingErr).To(BeNil())
 
 		Expect(actual).To(Equal(testingElement.ExpectedResponse))
 	}

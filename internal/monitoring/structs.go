@@ -10,3 +10,8 @@ type PrometheusHandler struct {
 	promHttpHandler           http.Handler
 	httpRequestsCounterVector *prometheus.CounterVec
 }
+
+type MostFrequentQueryRawData struct {
+	RawStrQuery  string
+	NumberOfHits int
+}

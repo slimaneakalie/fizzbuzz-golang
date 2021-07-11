@@ -37,3 +37,15 @@ func (handler *PrometheusHandler) MonitoringMiddleWare() fizzhttp.HandlerFunc {
 		handler.httpRequestsCounterVector.WithLabelValues(path, jsonStrQuery, responseStatus).Inc()
 	}
 }
+
+func (handler *PrometheusHandler) GetMostFrequentQuery() MostFrequentQueryRawData {
+	// MOST_FREQUENT_QUERY= topk(1, sum by (json_query) (http_request_total{path="/v1/fizzbuzz", response_status="200"}))
+	// PROMETHEUS_ENDPOINT = /api/v1/query
+	// PROMETHEUS_QS_PARAM_NAME = query
+	// PROMETHEUS_HOST -> should be a field name that we get from a config = http://localhost:9090
+	// Endpoint format:= ${PROMETHEUS_HOST}/${PROMETHEUS_ENDPOINT}?PROMETHEUS_QS_PARAM_NAME=MOST_FREQUENT_QUERY -> Use http helpers to encode the query
+	// Deserialize the promotheus response
+	// Handle the case where data.result is nil ou have length < 1
+	// Use strconv.Atoi(data.result[0].value[1]) on NumberOfHits
+	// Use data.result[0].metric.json_query on RawStrQuery
+}

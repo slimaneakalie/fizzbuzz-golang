@@ -25,6 +25,7 @@ var _ = Describe("Api package - Router.go", func() {
 			Expect(testTooling.TestingEngine.GetFuncFirstCallParamsInOrder("Group")).To(Equal(expectedGroupFuncCallParam))
 			Expect(testTooling.TestingEngine.RouterGroups).To(HaveLen(1))
 			Expect(testTooling.TestingEngine.RouterGroups[0].FuncIsCalledFirstTimeWithParamsPartial("POST", "")).To(BeTrue())
+			Expect(testTooling.TestingEngine.RouterGroups[0].FuncIsCalledFirstTimeWithParamsPartial("GET", "/stats")).To(BeTrue())
 
 			Expect(router.HttpEngine).To(Equal(testTooling.TestingEngine))
 			Expect(router.logger).To(Equal(testTooling.TestingLogger))
