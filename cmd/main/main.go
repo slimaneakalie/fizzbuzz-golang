@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
-	port := 9000 // TODO get this from a config
-	service.Start(port)
+	port := 9000                                   // TODO get this from a config
+	prometheusHostName := "http://prometheus:9090" // TODO get this from a config
+	service.Start(port, prometheusHostName)
 }

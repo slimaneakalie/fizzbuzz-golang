@@ -1,15 +1,16 @@
 services:
-  golang:
+  fizzbuzz-service:
+    restart: always
     build:
       context: ./
       dockerfile: Dockerfile
     container_name: fizzbuzz-service
-    restart: always
     ports:
       - '9000:9000'
   prometheus:
     image: prom/prometheus:v2.28.1
     restart: always
+    container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus

@@ -19,6 +19,8 @@ type defaultFizzbuzzRequestAPIHandler struct {
 
 type defaultStatsRequestHandler struct {
 	monitoringHelper monitoring.Handler
+	fizzbuzzEndpoint string
+	logger           logger.Logger
 }
 
 type FizzbuzzAPIRequest struct {
