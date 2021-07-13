@@ -51,7 +51,7 @@ The stats under the hood are relying on prometheus metrics.
 ````
 make run
 ````
-P.S: You need to have docker installed in your machine
+P.S: You need to have docker installed on your machine
 
 ## API documentation
 ````
