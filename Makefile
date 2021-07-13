@@ -1,12 +1,5 @@
-build:
-	GO111MODULE=on go build \
-     -v -o ./service cmd/main/*.go
-
-clean:
-	rm ./service || true
-
-run: build
-	./service
+run:
+	docker-compose up -d  --force-recreate --build
 
 doc:
 	@which swagger || GO111MODULE=on go get -u -v github.com/go-swagger/go-swagger@latest
