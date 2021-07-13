@@ -31,7 +31,7 @@ func (handler *defaultStatsRequestHandler) statsRequestHandler(context fizzhttp.
 	}
 
 	if rawMonitoringData.RawStrQuery == "{}" {
-		context.SendJSONResponse(http.StatusOK, nil)
+		context.SendJSONResponse(http.StatusNotFound, nil)
 		return
 	}
 

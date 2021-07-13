@@ -1,0 +1,97 @@
+swagger: "2.0"
+info:
+  description: Published Ads Search API
+  version: "2.0.0"
+  title: Published Ads Search API
+host: "localhost:9000"
+basePath: "/v1/fizzbuzz"
+paths:
+  /:
+    post:
+      summary: "fizzbuzz string list generator"
+      description: "returns a list of strings with numbers from 1 to limit, where: all multiples of firstInt are replaced by firstStr, all multiples of secondInt are replaced by secondStr, all multiples of firstInt and secondInt are replaced by firstStrSecondStr."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/FizzbuzzQuery"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/FizzbuzzResponse"
+        400:
+          description: "Invalid request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal server error"
+  /stats:
+    get:
+      summary: "statistics endpoint"
+      description: "returns the parameters corresponding to the most used request, as well as the number of hits for this request"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: object
+            properties:
+              mostFrequentQuery:
+                type: object
+                properties:
+                  body:
+                    $ref: "#/definitions/FizzbuzzQuery"
+                  numberOfHits:
+                    type: integer
+        404:
+          description: "No requests so far"
+        500:
+          description: "Internal server error"
+
+definitions:
+  FizzbuzzQuery:
+    type: object
+    properties:
+      firstInt:
+        type: integer
+        example: 3
+      secondInt:
+        type: integer
+        example: 5
+      limit:
+        type: integer
+        example: 5
+      firstStr:
+        type: string
+        example: "fizz"
+      secondStr:
+        type: string
+        example: "buzz"
+  FizzbuzzResponse:
+    type: object
+    properties:
+      fizzbuzzStringList:
+        type: array
+        items:
+          type: string
+  ErrorResponse:
+    type: object
+    properties:
+      type:
+        type: string
+      fieldErrors:
+        type: array
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+            field:
+              type: string
+            detail:
+              type: string
