@@ -5,6 +5,8 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: fizzbuzz-service
+    depends_on:
+      - prometheus
     ports:
       - '9000:9000'
   prometheus:
