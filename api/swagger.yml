@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: Published Ads Search API
+  description: Fizzbuzz golang API
   version: "2.0.0"
-  title: Published Ads Search API
+  title: Fizzbuzz golang API
 host: "localhost:9000"
 basePath: "/v1/fizzbuzz"
 paths:
